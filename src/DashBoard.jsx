@@ -5,6 +5,7 @@ import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
 import Navbar from "./components/Navbar";
 import Add from "./components/Add";
 import { useState } from "react";
+import Profile from "./components/Profile";
 
 function DashBoard() {
   const [mode, setMode] = useState("light");
@@ -22,6 +23,7 @@ function DashBoard() {
         <Sidebar setMode={setMode} mode={mode}/>
           <Feed />
           <Rightbar />
+          {/* <Profile /> */}
         </Stack>
         <Add />
       </Box>
