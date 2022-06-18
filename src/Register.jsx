@@ -22,7 +22,7 @@ function Copyright(props) {
         {'Copyright © HKUCS MSC2021 G032 CodeAcer '}
       </Typography>
     );
-  }
+}
 
 const theme = createTheme();
 

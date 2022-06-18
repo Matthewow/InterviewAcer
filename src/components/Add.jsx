@@ -11,6 +11,7 @@ import {
     Typography,
   } from "@mui/material";
   import React, { useState } from "react";
+  import { useNavigate } from "react-router-dom";
   import {
     Add as AddIcon,
     DateRange,
@@ -33,9 +34,19 @@ import {
     gap: "10px",
     marginBottom: "20px",
   });
-  
+
+
   const Add = () => {
     const [open, setOpen] = useState(false);
+    let navigate = useNavigate();
+    
+    function handleSelection(e){
+      e.preventDefault();
+      console.log('You clicked submit.');
+      navigate('/upload', { replace: true })
+    };
+
+
     return (
       <>
         <Tooltip
@@ -58,7 +69,7 @@ import {
           aria-describedby="modal-modal-description"
         >
           <Box
-            width={400}
+            width={300}
             height={280}
             bgcolor={"background.default"}
             color={"text.primary"}
@@ -66,7 +77,7 @@ import {
             borderRadius={5}
           >
             <Typography variant="h6" color="gray" textAlign="center">
-              Create post
+              Create
             </Typography>
             <UserBox>
               <Avatar
@@ -78,29 +89,27 @@ import {
               WANG Zhao
               </Typography>
             </UserBox>
-            <TextField
-              sx={{ width: "100%" }}
-              id="standard-multiline-static"
-              multiline
-              rows={3}
-              placeholder="What do you want to share ?"
-              variant="standard"
-            />
-            <Stack direction="row" gap={1} mt={2} mb={3}>
-              <EmojiEmotions color="primary" />
-              <Image color="secondary" />
-              <VideoCameraBack color="success" />
-              <PersonAdd color="error" />
-            </Stack>
+
+            <Typography color="gray">
+              What do you want to creat?
+            </Typography>
+            
+
             <ButtonGroup
+              sx = {{
+                marginTop: 2
+              }}
               fullWidth
-              variant="contained"
-              aria-label="outlined primary button group"
+              orientation="vertical"
+              aria-label="vertical contained button group"
+              variant="text"
             >
-              <Button>Post</Button>
-              <Button sx={{ width: "100px" }}>
-                <DateRange />
-              </Button>
+              <Button >
+                Simple Post</Button>
+              <Button onClick={handleSelection}>
+                Interview Question</Button>
+              <Button>Full Interview</Button>
+
             </ButtonGroup>
           </Box>
         </SytledModal>

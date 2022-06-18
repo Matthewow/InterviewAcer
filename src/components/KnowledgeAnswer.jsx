@@ -26,8 +26,7 @@ const AnswerCard = () => {
 
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-        In this article, I have listed the most important and frequently asked basic networking interview questions and answers with pictorial 
-        representation for your easy understanding and remembrance. This will strive towards success steps in your career.
+        The main difference between peer to peer and client server network is that in peer to peer network, each node can request for services and provide services while in client server network, the client nodes requests for services and server node responds with services.
         </Typography>
       </CardContent>
     </Card>

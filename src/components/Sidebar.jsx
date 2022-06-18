@@ -19,13 +19,18 @@ import {
   } from "@mui/material";
   import React from "react";
   
-  const Sidebar = ({mode,setMode}) => {
+  const Sidebar = ({mode,setMode,setPage}) => {
     return (
       <Box flex={1} p={2} sx={{ display: { xs: "none", sm: "block"}}}>
         <Box position="fixed">
           <List>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#home">
+              <ListItemButton component="a" href="#home"
+              onClick = {
+                e => {
+                  setPage("homepage")
+                }
+              }>
                 <ListItemIcon>
                   <Home />
                 </ListItemIcon>
@@ -33,7 +38,12 @@ import {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#interviews">
+              <ListItemButton component="a" href="#interviews"
+              onClick = {
+                e => {
+                  setPage("interviews")
+                }
+              }>
                 <ListItemIcon>
                   <Article />
                 </ListItemIcon>
@@ -41,7 +51,12 @@ import {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#knowledge">
+              <ListItemButton component="a" href="#knowledge"
+              onClick = {
+                e => {
+                  setPage("knowledge")
+                }
+              }>
                 <ListItemIcon>
                   <Group />
                 </ListItemIcon>
@@ -49,7 +64,12 @@ import {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#programming">
+              <ListItemButton component="a" href="#programming" 
+                onClick = {
+                  e => {
+                    setPage("praogramming")
+                  }
+                }>
                 <ListItemIcon>
                   <Storefront />
                 </ListItemIcon>
@@ -61,7 +81,9 @@ import {
                 <ListItemIcon>
                   <ModeNight />
                 </ListItemIcon>
-                <Switch onChange={e=>setMode(mode === "light" ? "dark" : "light")}/>
+                <Switch onChange={
+                  e=>{setMode(mode === "light" ? "dark" : "light");
+                  }}/>
               </ListItemButton>
             </ListItem>
           </List>
