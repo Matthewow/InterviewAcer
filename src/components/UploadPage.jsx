@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MDEditor from '@uiw/react-md-editor';
 import { Box, Typography, Autocomplete, TextField, Button } from "@mui/material";
 import Navbar from "./Navbar";
-import QuestionCard from "./QuestionCard";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function Upload() {
@@ -13,6 +13,7 @@ export default function Upload() {
     quetionTag: "",
     companyTag: ""
   });
+  let navigate = useNavigate();
 
   const [questionContent, setQuestionContent] = useState(questionData.value);
 
@@ -24,6 +25,7 @@ export default function Upload() {
 
   const handleSubmit = () => {
     console.log(questionData);
+    
     postQuestion();
 
   };
@@ -42,13 +44,19 @@ export default function Upload() {
         if (res.status === 200) {
           console.log(res.data);
           if (res.data.code === '00') {
-            console.log(questionContent)
             setQuestionContent(defaultData.value)
-            console.log(questionContent)
+            navigate('/info', { state: {
+                info: "success",
+                content: "Successfully Uploaded",
+                backto: "/upload"
+            } });
           }
           else{
-            //   setErrorAlert("block")
-            //   setAlertContext(res.data.description)
+            navigate('/info', { state: {
+                info: "success",
+                content: "Successfully Uploaded",
+                backto: "/upload"
+            } });
           }
         }
       })
