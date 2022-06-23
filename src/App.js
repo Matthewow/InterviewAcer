@@ -11,6 +11,7 @@ import {
   Route,
 } from "react-router-dom";
 import UploadPage from './components/UploadPage';
+import Info from './components/Info';
 
 // https://www.youtube.com/watch?v=aTPkos3LKi8&ab_channel=LamaDev
 
@@ -32,6 +33,8 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/upload" element={<UploadPage />} />
         <Route exact path="/test" element={<Test />} />
+        <Route exact path="/info" element={<Info />} />
+
       </Routes>
     </BrowserRouter>
   );
