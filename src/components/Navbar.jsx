@@ -1,17 +1,21 @@
-import { Mail, Notifications, Pets } from "@mui/icons-material";
+import { Mail, Notifications, Pets, Home } from "@mui/icons-material";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import {
   AppBar,
   Avatar,
   Badge,
   Box,
-  InputBase,
+  Stack,
   Menu,
+  IconButton,
   MenuItem,
   styled,
   Toolbar,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -38,12 +42,22 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  let navigate = useNavigate();
+  const handleSubmit = () => {
+    navigate('/')
+  }
   return (
     <AppBar position="sticky">
       <StyledToolbar>
+        <Stack direction = "row" spacing={1}>
+        <IconButton onClick={handleSubmit} size="small"  aria-label="home">
+          <Home />
+        </IconButton>
         <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
           CodeAcer
         </Typography>
+        </Stack>
+        
         <Pets sx={{ display: { xs: "block", sm: "none" } }} />
 
         <Icons>
