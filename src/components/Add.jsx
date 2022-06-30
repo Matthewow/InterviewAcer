@@ -43,7 +43,7 @@ import {
     function handleSelection(e){
       e.preventDefault();
       console.log('You clicked submit.');
-      navigate('/upload', { replace: true });
+      navigate('/question_upload', { replace: true });
     };
 
 

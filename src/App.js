@@ -1,8 +1,8 @@
 
 import './App.css';
-import SignInSide from './SignInSide';
-import Register from './Register';
-import DashBoard from './DashBoard';
+import SignInSide from './pages/SignInSide';
+import Register from './pages/Register';
+import DashBoard from './pages/DashBoard';
 import Test from './Test';
 import { useContext } from 'react';
 import {
@@ -10,8 +10,10 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import UploadPage from './components/UploadPage';
+import UploadPage from './pages/UploadPage';
 import Info from './components/Info';
+import Navbar from './components/Navbar';
+import Profile from './pages/Profile';
 
 // https://www.youtube.com/watch?v=aTPkos3LKi8&ab_channel=LamaDev
 
@@ -22,19 +24,19 @@ function App() {
     serverIP: "http://120.77.98.16:8080/"
   };
 
-  const jwtToken = useContext("");
-
+  const token = useContext("");
 
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route exact path="/" element={<DashBoard />} />
         <Route exact path="/signin" element={<SignInSide />} />
         <Route exact path="/register" element={<Register />} />
-        <Route exact path="/upload" element={<UploadPage />} />
+        <Route exact path="/question_upload" element={<UploadPage />} />
         <Route exact path="/test" element={<Test />} />
         <Route exact path="/info" element={<Info />} />
-
+        <Route exact path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

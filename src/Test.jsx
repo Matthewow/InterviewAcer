@@ -5,13 +5,18 @@ import Navbar from "./components/Navbar";
 import axios from 'axios';
 import { AddBox } from "@mui/icons-material";
 import {useLocation, useNavigate} from 'react-router-dom';
+import QuestionCard from "./components/QuestionCard";
 
 export default function Info() {
 
   return (
     <>
-    <Navbar/>
+      <Box>
 
+      
+
+
+    </Box>
     </>
 
   );

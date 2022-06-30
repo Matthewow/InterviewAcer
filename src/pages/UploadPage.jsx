@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MDEditor from '@uiw/react-md-editor';
 import { Box, Typography, Autocomplete, TextField, Button } from "@mui/material";
-import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
@@ -65,9 +64,6 @@ export default function Upload() {
 
   return (
     <>
-
-    <Navbar/>
-
     <Box 
         sx={{
             m:8

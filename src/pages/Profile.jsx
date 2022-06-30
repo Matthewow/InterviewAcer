@@ -2,7 +2,6 @@ import { Box, Stack, Button,InputLabel, MenuItem,
     Grid, TextField,
     Skeleton, Typography, Autocomplete } from "@mui/material";
 import React, { useState } from "react";
-import Post from "./Post";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const Profile = () => {
@@ -42,7 +41,7 @@ const Profile = () => {
     };
 
   return (
-    <Box fullHeight flex={7} p={{ xs: 0, md: 2 }} >
+    <Box fullHeight flex={7} p={{ xs: 0, md: 2 }} sx={{ml:20}}>
         <Box margin={5} 
             sx = {{
                 display: 'flex',
