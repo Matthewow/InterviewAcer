@@ -7,10 +7,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {useState} from  "react" 
 import KnowledgeAnswer from "./KnowledgeAnswer"
-import { Checkbox, IconButton } from '@mui/material';
+import { Checkbox, IconButton, Stack } from '@mui/material';
 import { Favorite, FavoriteBorder, Share } from '@mui/icons-material';
 
-export default function QuestionCard() {
+export function QuestionCard() {
 
     const [cardAnswerDisplay, setCardAnswerDisplay] = useState(false)
     const [answerFormat, setAnswerFormat] = useState("Answers ▼")
@@ -72,5 +72,14 @@ export default function QuestionCard() {
       </CardContent>
 
     </Card>
+  );
+}
+
+export function QuestionSmall(){
+  return (
+    <Stack direction='row'>
+
+      
+    </Stack>
   );
 }

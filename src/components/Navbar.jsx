@@ -106,7 +106,7 @@ const Navbar = () => {
           </MenuItem>
         </Link>
 
-        <Link to='/profile' style={{ textDecoration: 'none', color:"#222"}} onClick={(e) => setOpen(false)}>
+        <Link to='/mypost' style={{ textDecoration: 'none', color:"#222"}} onClick={(e) => setOpen(false)}>
           <MenuItem >
             <ArticleIcon color = "grey" sx={{mr:1}}/>
             My Post
