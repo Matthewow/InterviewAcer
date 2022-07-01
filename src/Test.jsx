@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import MDEditor from '@uiw/react-md-editor';
 import { Box, Typography, Alert, TextField, Button, Stack } from "@mui/material";
-import Navbar from "./components/Navbar";
-import axios from 'axios';
-import { AddBox } from "@mui/icons-material";
-import {useLocation, useNavigate} from 'react-router-dom';
-import QuestionCard from "./components/QuestionCard";
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
 
-export default function Info() {
+export default function Test() {
 
   return (
     <>
-      <Box>
-
-      
-
-
-    </Box>
+     <Player
+      autoplay
+      loop
+      src="https://assets4.lottiefiles.com/packages/lf20_hz4zkrb4.json"
+      style={{ height: '300px', width: '300px' }}
+    >
+      <Controls visible={false} buttons={['play', 'repeat', 'frame', 'debug']} />
+    </Player>
     </>
 
   );

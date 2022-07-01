@@ -17,11 +17,13 @@ import {
     ListItemText,
     Switch,
   } from "@mui/material";
+
   import React from "react";
+  import { Player, Controls } from '@lottiefiles/react-lottie-player';
   
   const Sidebar = ({mode,setMode,setPage}) => {
     return (
-      <Box flex={1} p={2} sx={{ display: { xs: "none", sm: "block"}}}>
+      <Box flex={1} p={2} sx={{display: { xs: "none", sm: "block"}}}>
         <Box position="fixed">
           <List>
             <ListItem disablePadding>
@@ -87,6 +89,15 @@ import {
               </ListItemButton>
             </ListItem>
           </List>
+          <Box sx={{mt: 10}}>
+            <Player
+              loop
+              src="https://assets9.lottiefiles.com/packages/lf20_wczpanc1.json"
+              style={{ height: '300px', width: '300px' }}
+              >
+              <Controls visible={false} buttons={['play', 'repeat', 'frame', 'debug']} />
+            </Player>
+          </Box>
         </Box>
       </Box>
     );

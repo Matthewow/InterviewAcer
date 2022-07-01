@@ -1,6 +1,7 @@
-import { Box, Stack } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import React from 'react'
-import QuestionCard2 from '../components/QuestionCard2'
+import QuestionDisplayCard from '../components/QuestionDisplayCard'
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
 
 const KnowledgePage = () => {
   return (
@@ -8,11 +9,38 @@ const KnowledgePage = () => {
     <Box flex={6} p={{ xs: 0, md: 2 }}>
         <Stack direction='row'>
             <Box flex={3} sx ={{mr:5}}>
-                <QuestionCard2 />
+                <QuestionDisplayCard />
             </Box>
 
             <Box flex={3}>
-                Right display card list
+                <Stack direction='column'>
+
+                  <Stack direction='row' justifyContent="space-around">
+                      <Box flex={2}>
+                        <Typography fontWeight={600} color="#52a1de" sx={{ opacity: '0.2', display: { lg: 'block', xs: 'none' }, fontSize: '70px' }}>
+                          Question List
+                        </Typography>
+
+
+                      </Box>
+                    <Box sx={{right:0}}>
+                      <Player
+                        autoplay
+                        loop
+                        src="https://assets4.lottiefiles.com/packages/lf20_hz4zkrb4.json"
+                        style={{ height: '300px', width: '300px' }}
+                      >
+                        <Controls visible={false} buttons={['play', 'repeat', 'frame', 'debug']} />
+                      </Player>
+                    </Box>
+
+                  </Stack>
+
+                  <Box flex = {3}>
+                      question list
+                    </Box>
+
+                </Stack>
             </Box>
 
         </Stack>
