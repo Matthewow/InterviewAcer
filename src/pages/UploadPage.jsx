@@ -3,6 +3,8 @@ import MDEditor from '@uiw/react-md-editor';
 import { Box, Typography, Autocomplete, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { companyNames, questionTypeLabels } from "../utils/labelData";
+import { postHeader } from "../utils/fetchData";
 
 export default function Upload() {
   // https://uiwjs.github.io/react-md-editor/
@@ -24,20 +26,23 @@ export default function Upload() {
 
   const handleSubmit = () => {
     console.log(questionData);
-    
     postQuestion();
 
   };
 
   const postQuestion = () => {
     const postData = {
-        "question_content": questionData.value,
+        "question_content": questionContent,
         "userid": "12345@qq.com",
         "company": questionData.companyTag,
         "tag": questionData.quetionTag
     };
 
-    axios.post(`http://120.77.98.16:8080/knowledge_service`, postData)
+    console.log(postData)
+
+    axios.post(`http://120.77.98.16:8080/knowledge_service`, postData, {
+      headers: postHeader
+    })
       .then(res => {
         console.log(res)
         if (res.status === 200) {
@@ -107,7 +112,7 @@ export default function Upload() {
                 setQuestionData({ ...questionData, companyTag: thisTag.label })
               }
             renderInput={(params) => <TextField {...params} label="Company Name" />}
-        />          
+            />          
         </Box>
 
         <Box sx={{my:3}}>
@@ -144,16 +149,3 @@ export default function Upload() {
 
 }
 
-const questionTypeLabels = [
-    {label: 'Network'},
-    {label: 'Operating System'},
-    {label: 'Database'},
-    {label: 'Data Structures'}
-]
-
-const companyNames = [
-    {label: 'Amazon'},
-    {label: 'Tencent'},
-    {label: 'Google'},
-    {label: 'Alibaba'}
-]

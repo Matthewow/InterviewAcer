@@ -50,7 +50,7 @@ const PageSideBar = () => {
 }
 
 const MyPostPage = () => {
-    const [select, setSelect] = useState(true);
+    const [select, setSelect] = useState(false);
     return (
         <>
         <Stack direction="row" spacing={2} justifyContent="space-between">
@@ -60,7 +60,7 @@ const MyPostPage = () => {
                 Question list
             </Box>
 
-            <Box flex={4} p={2} sx={{}} bgcolor='#999'>
+            <Box flex={4} p={2} sx={{}}>
                {select 
                ? 
                <>
