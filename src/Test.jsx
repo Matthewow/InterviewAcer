@@ -1,22 +1,40 @@
-import React, { useState } from "react";
-import MDEditor from '@uiw/react-md-editor';
-import { Box, Typography, Alert, TextField, Button, Stack } from "@mui/material";
-import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import React from 'react'
+import QuestionDisplayCard from './components/QuestionDisplayCard'
 
-export default function Test() {
+
+const Test = () => {
+  const displaycard = {
+    "knowledgeId": "c626494803684d6baf1155456d0d6d5f",
+    "question_content": "What is distributed system?",
+    "answer_list": null,
+    "userid": "123@qq.com",
+    "interviewId": "6f96514800484508a147b9cc47e0d3c4",
+    "userName": "123",
+    "comment_list": null,
+    "company": "Tencent",
+    "tag": "Network",
+    "uploadTime": "2022-07-06T09:09:49.000+00:00",
+    "answers": {
+        "queryInfo": {
+            "currentPage": 1,
+            "pageSize": 100,
+            "totalRecord": 0
+        },
+        "entities": []
+    },
+    "comments": {
+        "queryInfo": {
+            "currentPage": 1,
+            "pageSize": 2,
+            "totalRecord": 0
+        },
+        "entities": []
+    }
+}
 
   return (
-    <>
-     <Player
-      autoplay
-      loop
-      src="https://assets4.lottiefiles.com/packages/lf20_hz4zkrb4.json"
-      style={{ height: '300px', width: '300px' }}
-    >
-      <Controls visible={false} buttons={['play', 'repeat', 'frame', 'debug']} />
-    </Player>
-    </>
-
-  );
-
+    <><QuestionDisplayCard questioncard = {displaycard}/></>
+  )
 }
+
+export default Test

@@ -16,3 +16,12 @@ export const LottieCom = (props) => {
   )
 }
 
+export const LoadingAnimation = () => {
+  return(
+    <>
+    <LottieCom sourceLink = 'https://assets3.lottiefiles.com/private_files/lf30_ipvphpwo.json' height = '800px' width = '400px'/>
+    </>
+  )
+}
+
+

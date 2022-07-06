@@ -1,10 +1,11 @@
-import { Autocomplete, Box, Button, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, Container, Stack, TextField, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import QuestionDisplayCard from '../components/QuestionDisplayCard'
-import { LottieCom } from '../components/SmallerComps'
+import {LoadingAnimation, LottieCom } from '../components/SmallerComps'
 import {postHeader } from '../utils/fetchData'
 import axios from 'axios';
 import { companyNames, questionTypeLabels } from "../utils/labelData";
+import KnowledgeListItem from '../components/KnowledgeListItem'
 
 const KnowledgePage = () => {
 
@@ -20,6 +21,7 @@ const KnowledgePage = () => {
 
 
 const [questionListData, setQuestionListData] = useState([]);
+const [displayCard, setDisplayCard] = useState(undefined);
 
 useEffect(() => {
   console.log(questionListData)
@@ -45,18 +47,18 @@ function handleSubmit() {
 
 function check(){
   console.log('====================================');
-  console.log(questionListData);
+  console.log(displayCard);
   console.log('====================================');
 }
-
-
 
   return (
     <>
     <Box flex={6} p={{ xs: 0, md: 2 }}>
         <Stack direction='row'>
             <Box flex={3} sx ={{mr:5}}>
-                <QuestionDisplayCard />
+                <Box position = 'fixed'>
+                  {displayCard === undefined ? <LoadingAnimation/>: <><QuestionDisplayCard  questioncard={displayCard}/></>}
+                </Box>
             </Box>
 
             <Box flex={3}>
@@ -67,8 +69,6 @@ function check(){
                         <Typography fontWeight={600} color="#52a1de" sx={{ opacity: '0.2', display: { lg: 'block', xs: 'none' }, fontSize: '70px' }}>
                           Question List
                         </Typography>
-
-
                       </Box>
                     <Box sx={{right:0}}>
                       <LottieCom sourceLink = "https://assets4.lottiefiles.com/packages/lf20_hz4zkrb4.json"/>
@@ -77,9 +77,7 @@ function check(){
                   </Stack>
 
                   <Box flex = {3}>
-
                   <Stack direction='row'>
-
 
                   <Autocomplete 
                     sx={{
@@ -89,9 +87,6 @@ function check(){
                     }}
                     id="combo-box-demo"
                     options={questionTypeLabels}
-                    // onChange={(e, thisTag) =>
-                    //     setQuestionData({ ...questionData, quetionTag: thisTag.label })
-                    //   }
                     renderInput={(params) => <TextField {...params} label="Question Type" />}
                     />
 
@@ -113,29 +108,17 @@ function check(){
                     <Button sx={{ml:2}} onClick={check}> ALL </Button>
                   </Stack>
 
-                  {/* <Stack direction="row" gap="5px" alignItems="center" bgcolor='#eee'
-                    sx={{
-                      m: 1,
-                      p: 1
-                    }}>
-                    <Button variant="contained" size="small" color="primary" sx={{opacity: 0.7}}>Network</Button>
-                    <Button variant="contained" size="small" color="secondary" sx={{opacity: 0.7}}>Amazon</Button>
-                    <Typography>dsfsadfs</Typography>
-                  </Stack> */}
 
                   {questionListData?.map((item) => (
-                    <Stack key={item.knowledgeId} direction="row" gap="5px" alignItems="center" bgcolor='#eee'
-                    sx={{
-                      m: 1,
-                      p: 1
-                    }}>
-                    {item.tag? <Button variant="contained" size="small" color="primary" sx={{opacity: 0.7}}>{item.tag}</Button>: <></>}
-                    {item.company?<Button variant="contained" size="small" color="secondary" sx={{opacity: 0.7}}>{item.company}</Button>:<></>}
-                    {/* <Button variant="contained" size="small" color="primary" sx={{opacity: 0.7}}>{item.tag}</Button>
-                    <Button variant="contained" size="small" color="secondary" sx={{opacity: 0.7}}>{item.company}</Button> */}
-                    <Typography>{item.question_content}</Typography>
-                  </Stack>
+                    <KnowledgeListItem 
+                      key = {item.knowledgeId}
+                      item = {item}
+                      setDisplayCard = {setDisplayCard}
+                    />
                   ))}
+
+
+                  
 
 
 

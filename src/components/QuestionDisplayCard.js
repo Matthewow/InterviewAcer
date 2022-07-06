@@ -30,26 +30,16 @@ const ExpandMore = styled((props) => {
 
 export default function QuestionDisplayCard({questioncard}) {
   const [expanded, setExpanded] = React.useState(false);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  questioncard = {
-    author: "Matthew",
-    date: "18 Jun 2022",
-    question: "What is TCP/IP model?",
-    type_tag: "Network",
-    company: "Amazon",
-    answers: []
-  }
-
   return (
-    <Card sx={{mr:5}}>
+    <Card sx={{mr:5, width: '100%'}} >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            M
+            {questioncard.userName[0]}
           </Avatar>
         }
         action={
@@ -57,8 +47,8 @@ export default function QuestionDisplayCard({questioncard}) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={questioncard.author}
-        subheader={questioncard.date}
+        title={questioncard.userName}
+        subheader={questioncard.uploadTime.substring(0, 10)}
       />
       <CardMedia
         component="img"
@@ -67,10 +57,10 @@ export default function QuestionDisplayCard({questioncard}) {
         alt="Paella dish"
       />
       <CardContent>
-        <Button variant="contained" size="small" color="primary" sx={{opacity: 0.7}}>Network</Button>
-        <Button variant="contained" size="small" color="secondary" sx={{opacity: 0.7, ml: 2}}>Amazon</Button>
+        <Button variant="contained" size="small" color="primary" sx={{opacity: 0.7}}>{questioncard.company}</Button>
+        <Button variant="contained" size="small" color="secondary" sx={{opacity: 0.7, ml: 2}}>{questioncard.tag}</Button>
         <Typography variant="h6" color="text.primary" sx={{mt: 1}}>
-          {questioncard.question}
+          {questioncard.question_content}
         </Typography>
       </CardContent>
 
@@ -125,7 +115,6 @@ export default function QuestionDisplayCard({questioncard}) {
               placeholder="Type comment here..."
               multiline
               rows={3}
-              maxRows={6}
             />
           </Stack>
 
@@ -135,4 +124,5 @@ export default function QuestionDisplayCard({questioncard}) {
       </Collapse>
     </Card>
   );
+
 }
