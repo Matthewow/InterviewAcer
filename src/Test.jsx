@@ -1,9 +1,9 @@
 import React from 'react'
-import QuestionDisplayCard from './components/QuestionDisplayCard'
+import { KnowledgeCommentItem } from './components/KnowledgeListItem'
 
 
 const Test = () => {
-  const displaycard = {
+  const displaycard ={
     "knowledgeId": "c626494803684d6baf1155456d0d6d5f",
     "question_content": "What is distributed system?",
     "answer_list": null,
@@ -26,14 +26,27 @@ const Test = () => {
         "queryInfo": {
             "currentPage": 1,
             "pageSize": 2,
-            "totalRecord": 0
+            "totalRecord": 1
         },
-        "entities": []
+        "entities": [
+            {
+                "knowledgeCommentId": "6c52b8768cdb437ab4414baa6377b16a",
+                "knowledgeId": "c626494803684d6baf1155456d0d6d5f",
+                "providerId": "123@qq.com",
+                "userName": "123",
+                "content": "idk",
+                "uploadTime": "2022-07-07T12:46:30.000+00:00",
+                "lastModifiedTime": "2022-07-07T12:46:30.000+00:00"
+            }
+        ]
     }
 }
 
   return (
-    <><QuestionDisplayCard questioncard = {displaycard}/></>
+    // <><QuestionDisplayCard questioncard = {displaycard}/></>
+    <>
+      <KnowledgeCommentItem data = {displaycard.comments.entities}/>
+    </>
   )
 }
 

@@ -2,15 +2,23 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Stack } from '@mui/material';
+import { Box, CardActionArea, Stack } from '@mui/material';
 
-export default function KnowledgeListItem({item, setDisplayCard}) {
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+
+export function KnowledgeListItem({item, setDisplayCard}) {
   return (
     <Card 
        
       onClick={() => {
         setDisplayCard(item);
-        console.log(`set display to ${item.knowledgeId}`)
+        console.log(`set display to }`);
+        console.log(item);
       }}
     >
       <CardActionArea>
@@ -34,3 +42,47 @@ export default function KnowledgeListItem({item, setDisplayCard}) {
     </Card>
   );
 }
+
+
+
+export  function KnowledgeCommentItem({data}) {
+  console.log(data);
+  return (
+    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+      {data?.map((item) => (
+        <Box key = {item.knowledgeCommentId}>
+        <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar aria-label="recipe">
+            {item.userName[0]}
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          primary={item.userName}
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline'}}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                {item.lastModifiedTime.substring(0, 10)}
+              </Typography>
+              {': ' + item.content}
+            </React.Fragment>
+          }
+        />
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      </Box>
+      ))}
+      
+    </List>
+  );
+}
+
+
+// export function KnowledgeCommentItem({item, setDisplayCard}) {
+//   return (<></>)
+// }

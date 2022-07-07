@@ -16,6 +16,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button, Checkbox, Stack, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import axios from 'axios';
+import { KnowledgeCommentItem } from './KnowledgeListItem';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,6 +35,43 @@ export default function QuestionDisplayCard({questioncard}) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const [commentsCount, setCommentCount] = React.useState(0);
+  const [answersCount, setAnswersCount] = React.useState(0);
+  const [commentContent, setCommentContent] = React.useState('');
+
+  React.useEffect(() => {
+    setCommentCount(questioncard.comments.entities.length);
+    console.log('====================================');
+    console.log(commentsCount);
+    console.log(questioncard.comments.entities.length);
+    console.log('====================================');
+  }, [questioncard]);
+
+
+  
+  
+  const handlePostSubmit = () => {
+    const requestBody = {
+      "knowledgeId": questioncard.knowledgeId,
+      "content": commentContent
+  }
+    console.log('Comment posted', commentContent);
+    axios.post(`http://120.77.98.16:8080/knowledge_service/comment/`, requestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
+    }
+    })
+    .then(res => {
+      console.log(res)
+      if (res.status === 200) {
+        if (res.data.code === '00') 
+            setCommentContent('')
+      }
+    })
+  }
+  
 
   return (
     <Card sx={{mr:5, width: '100%'}} >
@@ -88,21 +127,22 @@ export default function QuestionDisplayCard({questioncard}) {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          {(questioncard.answers && questioncard.answers.length) ? 
-          <> answers</> : 
-          <Box 
-            fullWidth
-            sx={{
-              background: '#eee',
-              p: 3
-            }}
-          >
-            <Typography align="center" fontWeight={600} color="#777" sx={{ opacity: '0.4', fontSize: '20px' }}>
-              No comments yet
-            </Typography>
 
-          </Box>
+          {
+            commentsCount === 0 ? 
+            <>
+              <Typography align="center" fontWeight={600} color="#777" sx={{ opacity: '0.4', fontSize: '20px', p:3, background: '#eee'}}>
+                    No comments yet
+              </Typography> 
+            </>
+              
+            :
+            <KnowledgeCommentItem data = {questioncard.comments.entities}/>
+    
           }
+
+
+          
           
           <Stack spacing = {1} sx={{mt: 1}} justifyContent="space-between">
 
@@ -113,12 +153,16 @@ export default function QuestionDisplayCard({questioncard}) {
             <TextField
               fullWidth
               placeholder="Type comment here..."
+              value={commentContent}
               multiline
               rows={3}
+              onChange={(e) => {
+                setCommentContent(e.target.value);
+              }}
             />
           </Stack>
 
-            <Button variant='outlined' sx = {{mt: 1}}>post</Button>
+            <Button variant='outlined' sx = {{mt: 1}} onClick = {handlePostSubmit}>post</Button>
             
         </CardContent>
       </Collapse>

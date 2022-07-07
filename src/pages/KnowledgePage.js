@@ -5,7 +5,7 @@ import {LoadingAnimation, LottieCom } from '../components/SmallerComps'
 import {postHeader } from '../utils/fetchData'
 import axios from 'axios';
 import { companyNames, questionTypeLabels } from "../utils/labelData";
-import KnowledgeListItem from '../components/KnowledgeListItem'
+import {KnowledgeListItem } from '../components/KnowledgeListItem'
 
 const KnowledgePage = () => {
 
@@ -54,9 +54,10 @@ function check(){
   return (
     <>
     <Box flex={6} p={{ xs: 0, md: 2 }}>
-        <Stack direction='row'>
-            <Box flex={3} sx ={{mr:5}}>
-                <Box position = 'fixed'>
+        <Stack direction='row'  sx ={{mr:5, width : '100%'}}>
+            <Box flex={3} sx ={{mr:5, width : '100%'}}>
+                {/* <Box position = 'fixed' > */}
+                <Box >
                   {displayCard === undefined ? <LoadingAnimation/>: <><QuestionDisplayCard  questioncard={displayCard}/></>}
                 </Box>
             </Box>
@@ -116,12 +117,6 @@ function check(){
                       setDisplayCard = {setDisplayCard}
                     />
                   ))}
-
-
-                  
-
-
-
                   </Box>
 
                 </Stack>
