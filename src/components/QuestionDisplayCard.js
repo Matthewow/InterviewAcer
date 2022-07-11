@@ -144,11 +144,12 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
         <Button variant="contained" size="small" color="primary" sx={{opacity: 0.7}}>{questioncard.company}</Button>
         <Button variant="contained" size="small" color="secondary" sx={{opacity: 0.7, ml: 2}}>{questioncard.tag}</Button>
         <Box sx={{my: 2}}>
-
+        <div data-color-mode="light">
+          <div className="wmde-markdown-var"> </div>
           <MDEditor.Markdown
             source={questioncard.question_content}
-            linkTarget="_blank"
-          />
+            linkTarget="_blank"/>
+        </div>
         </Box>
         {/* <Typography variant="h6" color="text.primary" sx={{mt: 1}}>
           {questioncard.question_content}

@@ -1,23 +1,16 @@
-import { Button, TextField } from '@mui/material'
 import React from 'react'
-
-const Test = ({token}) => {
-  const handleSubmit = () => {
-    console.log(token);
-  }
+import { InterviewPreviewItem } from './components/KnowledgeListItem'
 
 
+const Test = () => {
+  const defaultQuestionData = {
+    question_content: 'sdfasdf',
+    tag: 'sdfsd'
+}
   return (
-    <>
-    <div>Test</div>
-    <TextField
-  id="outlined-multiline-static"
-  label="Multiline"
-  multiline
-  rows={4}
-  defaultValue="Default Value"
-/>
-    </>
+    <div>
+      <InterviewPreviewItem item = {defaultQuestionData}/>
+    </div>
   )
 }
 

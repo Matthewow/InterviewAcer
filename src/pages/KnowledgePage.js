@@ -13,9 +13,9 @@ const KnowledgePage = () => {
     "pageFirst": 1,
     "pageSizeFirst": 30,
     "pageSecond": 1,
-    "pageSizeSecond": 100,
+    "pageSizeSecond": 10,
     "pageThird": 1,
-    "pageSizeThird": 2,
+    "pageSizeThird": 10,
     "type": 0
 }
 

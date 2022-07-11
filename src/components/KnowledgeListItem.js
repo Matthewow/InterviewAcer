@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Box, CardActionArea, Stack } from '@mui/material';
+import { Box, Button, CardActionArea, Stack } from '@mui/material';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -83,7 +83,26 @@ export  function KnowledgeCommentItem({data}) {
   );
 }
 
+export function InterviewPreviewItem({item}) {
+  return (
+    <Card>
+        <CardContent>
+          <Stack direction='row' gap='10px' sx={{display: 'flex', justifyContent: 'space-between'}}>
+            <Stack direction='row'>
+              <Typography gutterBottom variant="body1" component="div" color='secondary'>
+                {item.tag}
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ml:1}}>
+                {item.question_content}
+              </Typography>
+            </Stack>
 
-// export function KnowledgeCommentItem({item, setDisplayCard}) {
-//   return (<></>)
-// }
+            <Stack direction='row'>
+              <Button variant='contained'>edit</Button>
+              <Button variant='contained' color='error' sx={{ml:1}}>delete</Button>
+            </Stack>
+          </Stack>
+        </CardContent>
+    </Card>
+  );
+}

@@ -11,7 +11,7 @@ import {
     Typography,
   } from "@mui/material";
   import React, { useState } from "react";
-  import { useNavigate } from "react-router-dom";
+  import { Link, useNavigate } from "react-router-dom";
   import {
     Add as AddIcon,
     DateRange,
@@ -38,14 +38,6 @@ import {
 
   const Add = () => {
     const [open, setOpen] = useState(false);
-    let navigate = useNavigate();
-    
-    function handleSelection(e){
-      e.preventDefault();
-      console.log('You clicked submit.');
-      navigate('/question_upload', { replace: true });
-    };
-
 
     return (
       <>
@@ -106,9 +98,13 @@ import {
             >
               <Button >
                 Simple Post</Button>
-              <Button onClick={handleSelection}>
-                Interview Question</Button>
-              <Button>Full Interview</Button>
+              <Link to="/question_upload" style={{ textDecoration: 'none' }}>
+                <Button> Interview Question</Button>
+              </Link>
+
+               <Link to="/interview_upload" style={{ textDecoration: 'none' }}>
+                <Button>Full Interview</Button>
+               </Link>
 
             </ButtonGroup>
           </Box>
