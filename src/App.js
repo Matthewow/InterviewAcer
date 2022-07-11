@@ -10,7 +10,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import UploadPage from './pages/UploadPage';
+import QuestionUploadPage from './pages/QuestionUploadPage';
+import InterviewUploadPage from './pages/InterviewUploadPage';
 import Info from './components/Info';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
@@ -35,7 +36,8 @@ function App() {
         <Route exact path="/" element={<DashBoard />} />
         <Route exact path="/signin" element={<SignInSide />} />
         <Route exact path="/register" element={<Register />} />
-        <Route exact path="/question_upload" element={<UploadPage />} />
+        <Route exact path="/question_upload" element={<QuestionUploadPage />} />
+        <Route exact path="/interview_upload" element={<InterviewUploadPage />} />
         <Route exact path="/test" element={<Test token = {token}/>} />
         <Route exact path="/info" element={<Info />} />
         <Route exact path="/profile" element={<Profile />} />

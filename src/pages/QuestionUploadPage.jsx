@@ -6,7 +6,7 @@ import axios from 'axios';
 import { companyNames, questionTypeLabels } from "../utils/labelData";
 import { postHeader } from "../utils/fetchData";
 
-export default function Upload() {
+export default function QuestionUploadPage() {
   // https://uiwjs.github.io/react-md-editor/
 
   const [questionData, setQuestionData] = useState({
