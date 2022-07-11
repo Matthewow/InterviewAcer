@@ -52,14 +52,14 @@ export default function Upload() {
             navigate('/info', { state: {
                 info: "success",
                 content: "Successfully Uploaded",
-                backto: "/upload"
+                backto: "/question_upload"
             } });
           }
           else{
             navigate('/info', { state: {
                 info: "success",
                 content: "Successfully Uploaded",
-                backto: "/upload"
+                backto: "/question_upload"
             } });
           }
         }
@@ -91,6 +91,7 @@ export default function Upload() {
                 ml: 1,
                 width: 200
             }}
+            freeSolo
             id="combo-box-demo"
             options={questionTypeLabels}
             onChange={(e, thisTag) =>
@@ -105,7 +106,7 @@ export default function Upload() {
                 ml: 1,
                 width: 200
             }}
-
+            freeSolo
             id="combo-box-demo"
             options={companyNames}
             onChange={(e, thisTag) =>

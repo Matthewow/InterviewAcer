@@ -54,11 +54,11 @@ function check(){
   return (
     <>
     <Box flex={6} p={{ xs: 0, md: 2 }}>
-        <Stack direction='row'  sx ={{mr:5, width : '100%'}}>
+        <Stack direction='row' sx ={{mr:5}}>
             <Box flex={3} sx ={{mr:5, width : '100%'}}>
                 {/* <Box position = 'fixed' > */}
                 <Box >
-                  {displayCard === undefined ? <LoadingAnimation/>: <><QuestionDisplayCard  questioncard={displayCard}/></>}
+                  {displayCard === undefined ? <LoadingAnimation/>: <><QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard}/></>}
                 </Box>
             </Box>
 
@@ -105,8 +105,8 @@ function check(){
                     //   }
                     renderInput={(params) => <TextField {...params} label="Company Name" />}
                     />    
-                    <Button sx={{ml:2}} onClick={handleSubmit}> Search ALL </Button>
-                    <Button sx={{ml:2}} onClick={check}> ALL </Button>
+                    <Button sx={{ml:2}} onClick={handleSubmit}> Search </Button>
+                    <Button sx={{ml:2}} onClick={check}> Search ALL </Button>
                   </Stack>
 
 

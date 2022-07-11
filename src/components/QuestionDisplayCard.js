@@ -14,10 +14,11 @@ import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Button, Checkbox, Stack, TextField } from '@mui/material';
+import { Button, Checkbox, Divider, Stack, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { KnowledgeCommentItem } from './KnowledgeListItem';
+import MDEditor from '@uiw/react-md-editor';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,7 +31,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function QuestionDisplayCard({questioncard}) {
+export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -39,38 +40,82 @@ export default function QuestionDisplayCard({questioncard}) {
   const [commentsCount, setCommentCount] = React.useState(0);
   const [answersCount, setAnswersCount] = React.useState(0);
   const [commentContent, setCommentContent] = React.useState('');
+  const [isCommentsDisplayed, setIsCommentsDisplayed] = React.useState(true);
+  const [isLiked, setIsLiked] = React.useState(false);
 
   React.useEffect(() => {
-    setCommentCount(questioncard.comments.entities.length);
-    console.log('====================================');
-    console.log(commentsCount);
-    console.log(questioncard.comments.entities.length);
-    console.log('====================================');
+    setCommentCount(questioncard.comments.queryInfo.totalRecord);
+    setAnswersCount(questioncard.answers.queryInfo.totalRecord);
+    setIsLiked(questioncard.isLiked === 0? false: true)
   }, [questioncard]);
-
-
-  
   
   const handlePostSubmit = () => {
+
+  var url = isCommentsDisplayed ? `http://120.77.98.16:8080/knowledge_service/comment/`:`http://120.77.98.16:8080/knowledge_service/answer/`
+
     const requestBody = {
       "knowledgeId": questioncard.knowledgeId,
       "content": commentContent
   }
     console.log('Comment posted', commentContent);
-    axios.post(`http://120.77.98.16:8080/knowledge_service/comment/`, requestBody, {
+    axios.post(url, requestBody, {
       headers: {
         'Content-Type': 'application/json',
         'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
     }
     })
     .then(res => {
-      console.log(res)
       if (res.status === 200) {
         if (res.data.code === '00') 
-            setCommentContent('')
+            setCommentContent('');
+            refreshThisCard();
       }
     })
   }
+
+  const handleLiked = () => {
+
+    var url = `http://120.77.98.16:8080/users_like/`
+    const requestBody = {
+      "id": questioncard.knowledgeId,
+      "type": 0
+    }
+
+    axios.post(url, requestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        console.log(res.data)
+        if (res.data.code === '00') 
+            setIsLiked(true)
+        if (res.data.code === '11') 
+            setIsLiked(false)
+        }
+    })
+
+  }
+
+  const refreshThisCard = () => {
+    console.log('Comment posted', commentContent);
+    axios.get(`http://120.77.98.16:8080/knowledge_service?uuid=${questioncard.knowledgeId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
+    }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        if (res.data.code === '00') 
+          setDisplayCard(res.data.data)
+      }
+    })
+  }
+
+
   
 
   return (
@@ -87,7 +132,7 @@ export default function QuestionDisplayCard({questioncard}) {
           </IconButton>
         }
         title={questioncard.userName}
-        subheader={questioncard.uploadTime.substring(0, 10)}
+        subheader={`${questioncard.uploadTime.substring(0, 10)} ${questioncard.uploadTime.substring(11, 16)}`}
       />
       <CardMedia
         component="img"
@@ -98,9 +143,16 @@ export default function QuestionDisplayCard({questioncard}) {
       <CardContent>
         <Button variant="contained" size="small" color="primary" sx={{opacity: 0.7}}>{questioncard.company}</Button>
         <Button variant="contained" size="small" color="secondary" sx={{opacity: 0.7, ml: 2}}>{questioncard.tag}</Button>
-        <Typography variant="h6" color="text.primary" sx={{mt: 1}}>
+        <Box sx={{my: 2}}>
+
+          <MDEditor.Markdown
+            source={questioncard.question_content}
+            linkTarget="_blank"
+          />
+        </Box>
+        {/* <Typography variant="h6" color="text.primary" sx={{mt: 1}}>
           {questioncard.question_content}
-        </Typography>
+        </Typography> */}
       </CardContent>
 
       <CardActions disableSpacing>
@@ -108,6 +160,8 @@ export default function QuestionDisplayCard({questioncard}) {
           <Checkbox
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite sx={{ color: "red" }} />}
+            checked = {isLiked}
+            onChange = {handleLiked}
           />
         </IconButton>
         <IconButton aria-label="share">
@@ -127,19 +181,48 @@ export default function QuestionDisplayCard({questioncard}) {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-
+          <Stack direction='row'>
+            <Button 
+            disabled = {isCommentsDisplayed}
+            onClick={() => {setIsCommentsDisplayed(!isCommentsDisplayed)}}>{`Comments(${commentsCount})`
+            }</Button>
+            <Button 
+            disabled = {!isCommentsDisplayed}
+            onClick={() => {setIsCommentsDisplayed(!isCommentsDisplayed)}}
+            >{`Answers(${answersCount})`}</Button>
+          </Stack>
+          <Divider />
+          
+          {isCommentsDisplayed?
+          <>
           {
-            commentsCount === 0 ? 
-            <>
-              <Typography align="center" fontWeight={600} color="#777" sx={{ opacity: '0.4', fontSize: '20px', p:3, background: '#eee'}}>
-                    No comments yet
-              </Typography> 
-            </>
-              
-            :
-            <KnowledgeCommentItem data = {questioncard.comments.entities}/>
-    
+              commentsCount === 0 ? 
+              <>
+                <Typography align="center" fontWeight={600} color="#777" sx={{ opacity: '0.4', fontSize: '20px', p:3, background: '#eee'}}>
+                      No comments yet
+                </Typography> 
+              </>
+                
+              :
+              <KnowledgeCommentItem data = {questioncard.comments.entities}/>
           }
+          </>
+          :
+          <>
+          {
+              answersCount === 0 ? 
+              <>
+                <Typography align="center" fontWeight={600} color="#777" sx={{ opacity: '0.4', fontSize: '20px', p:3, background: '#eee'}}>
+                      No answers yet
+                </Typography> 
+              </>
+                
+              :
+              <KnowledgeCommentItem data = {questioncard.answers.entities}/>
+          }
+          </>  
+        }
+          
 
 
           
@@ -152,7 +235,7 @@ export default function QuestionDisplayCard({questioncard}) {
 
             <TextField
               fullWidth
-              placeholder="Type comment here..."
+              placeholder= {isCommentsDisplayed?"Type comment here...":"Type answer here..."}
               value={commentContent}
               multiline
               rows={3}

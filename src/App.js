@@ -4,7 +4,7 @@ import SignInSide from './pages/SignInSide';
 import Register from './pages/Register';
 import DashBoard from './pages/DashBoard';
 import Test from './Test';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -16,6 +16,7 @@ import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
 import MyPostPage from './pages/MyPostPage';
 
+
 // https://www.youtube.com/watch?v=aTPkos3LKi8&ab_channel=LamaDev
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
     serverIP: "http://120.77.98.16:8080/"
   };
 
-  const token = useContext("");
+  const [token, setToken] = useState('');
 
   return (
     <BrowserRouter>
@@ -35,7 +36,7 @@ function App() {
         <Route exact path="/signin" element={<SignInSide />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/question_upload" element={<UploadPage />} />
-        <Route exact path="/test" element={<Test />} />
+        <Route exact path="/test" element={<Test token = {token}/>} />
         <Route exact path="/info" element={<Info />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/mypost" element={<MyPostPage />} />

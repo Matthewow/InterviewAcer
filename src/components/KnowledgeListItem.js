@@ -46,11 +46,10 @@ export function KnowledgeListItem({item, setDisplayCard}) {
 
 
 export  function KnowledgeCommentItem({data}) {
-  console.log(data);
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <List sx={{  bgcolor: 'background.paper' }}>
       {data?.map((item) => (
-        <Box key = {item.knowledgeCommentId}>
+        <Box key = {item.knowledgeCommentId} maxWidth='400px'>
         <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar aria-label="recipe">
@@ -67,9 +66,11 @@ export  function KnowledgeCommentItem({data}) {
                 variant="body2"
                 color="text.primary"
               >
-                {item.lastModifiedTime.substring(0, 10)}
+                {`${item.lastModifiedTime.substring(0, 10)} ${item.lastModifiedTime.substring(11, 16)} \n`}
               </Typography>
-              {': ' + item.content}
+
+              <Typography component="span" style={{ wordWrap: "break-word" }}>{item.content}</Typography>
+              
             </React.Fragment>
           }
         />
