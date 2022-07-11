@@ -231,7 +231,7 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
           <Stack spacing = {1} sx={{mt: 1}} justifyContent="space-between">
 
             <Typography variant='subtitle2' color="text.secondary">
-              Add a new comment
+              {isCommentsDisplayed?"Post a New Comment":"Post a Answer"}  
             </Typography>
 
             <TextField

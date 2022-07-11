@@ -6,6 +6,7 @@ import axios from 'axios';
 import { companyNames, questionTypeLabels } from "../utils/labelData";
 import { postHeader } from "../utils/fetchData";
 import { InterviewPreviewItem } from "../components/KnowledgeListItem";
+import { LottieCom } from "../components/SmallerComps";
 
 export default function QuestionUploadPage() {
 
@@ -364,7 +365,12 @@ export default function QuestionUploadPage() {
         }
 
         {fillStep != 0?
+        <>
         <Button sx={{mt:5}} variant="contained" color="success" onClick={() => {setFillStep(fillStep - 1)}}>Next</Button>
+        <Box maxWidth='500px'>
+        <LottieCom sourceLink = 'https://assets4.lottiefiles.com/packages/lf20_1is5t0ur.json' height = '400px' width = '400px'/>
+        </Box>
+        </>
         :<></>}
         
 
