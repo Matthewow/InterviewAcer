@@ -46,36 +46,35 @@ export default function QuestionUploadPage() {
     };
 
     const test = () => {
-        console.log(questionCollection);
+        console.log(interviewData);
     }
 
     const postInterview = () => {
 
-    console.log(interviewData)
-    axios.post(`http://120.77.98.16:8080/interview_service/create`, interviewData, {
-      headers: postHeader
-    })
-      .then(res => {
-        console.log(res)
-        if (res.status === 200) {
-          console.log(res.data);
-          if (res.data.code === '00') {
-            setInterviewData(defaultInterViewData)
-            navigate('/info', { state: {
-                info: "success",
-                content: "Successfully Uploaded",
-                backto: "/interview_upload"
-            } });
-          }
-          else{
-            navigate('/info', { state: {
-                info: "error",
-                content: res.data.description,
-                backto: "/interview_upload"
-            } });
-          }
-        }
-      })
+        axios.post(`http://120.77.98.16:8080/interview_service/create`, interviewData, {
+        headers: postHeader
+        })
+        .then(res => {
+            console.log(res)
+            if (res.status === 200) {
+            console.log(res.data);
+            if (res.data.code === '00') {
+                setInterviewData(defaultInterViewData)
+                navigate('/info', { state: {
+                    info: "success",
+                    content: "Successfully Uploaded",
+                    backto: "/interview_upload"
+                } });
+            }
+            else{
+                navigate('/info', { state: {
+                    info: "error",
+                    content: res.data.description,
+                    backto: "/interview_upload"
+                } });
+            }
+            }
+        })
     };
 
 
@@ -89,20 +88,22 @@ export default function QuestionUploadPage() {
             <Stack direction='column' maxWidth='800px'>
                 <Typography sx={{mt: 2}}> Title</Typography>
                 <TextField
-                id="standard-multiline-flexible"
-                label="You can add a brief of this interview here, and get the others a quick understanding"
-                maxRows={4}
-                //   value={value}
-                //   onChange={handleChange}
-                variant="standard"
+                    id="standard-multiline-flexible"
+                    label="You can add a brief of this interview here, and get the others a quick understanding"
+                    maxRows={4}
+                    value={interviewData.title}
+                    onChange={(e) =>{
+                        setInterviewData({ ...interviewData, title: e.target.value })
+                    }}
+                    variant="standard"
                 />
                 <Typography sx={{mt: 3}}> Description</Typography>
                 <TextField
-                id="standard-multiline-static"
-                label="More detailed description here "
-                multiline
-                rows={4}
-                variant="standard"
+                    id="standard-multiline-static"
+                    label="More detailed description here "
+                    multiline
+                    rows={4}
+                    variant="standard"
                 />        
             </Stack> 
             </>
@@ -298,7 +299,34 @@ export default function QuestionUploadPage() {
             Upload an Interview
         </Typography>
 
-        <InterviewDescription />
+        <>
+            <Typography variant="h5" color = "primary" sx={{mt: 5}}>
+                About this interview
+            </Typography>
+    
+            <Stack direction='column' maxWidth='800px'>
+                <Typography sx={{mt: 2}}> Title</Typography>
+                <TextField
+                    id="standard-multiline-flexible"
+                    label="You can add a brief of this interview here, and get the others a quick understanding"
+                    maxRows={4}
+                    value={interviewData.title}
+                    onChange={(e) =>{
+                        setInterviewData({ ...interviewData, title: e.target.value })
+                    }}
+                    variant="standard"
+                />
+                <Typography sx={{mt: 3}}> Description</Typography>
+                <TextField
+                    id="standard-multiline-static"
+                    label="More detailed description here "
+                    multiline
+                    rows={4}
+                    
+                    variant="standard"
+                />        
+            </Stack> 
+            </>
 
         {fillStep < 2 ? 
         <>
@@ -367,14 +395,11 @@ export default function QuestionUploadPage() {
         {fillStep != 0?
         <>
         <Button sx={{mt:5}} variant="contained" color="success" onClick={() => {setFillStep(fillStep - 1)}}>Next</Button>
-        <Box maxWidth='500px'>
-        <LottieCom sourceLink = 'https://assets4.lottiefiles.com/packages/lf20_1is5t0ur.json' height = '400px' width = '400px'/>
+            <Box maxWidth='500px'>
+            <LottieCom sourceLink = 'https://assets4.lottiefiles.com/packages/lf20_1is5t0ur.json' height = '400px' width = '400px'/>
         </Box>
         </>
         :<></>}
-        
-
-
         
     </Box>
     

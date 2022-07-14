@@ -22,11 +22,6 @@ import MyPostPage from './pages/MyPostPage';
 
 function App() {
 
-
-  const attributes = {
-    serverIP: "http://120.77.98.16:8080/"
-  };
-
   const [token, setToken] = useState('');
 
   return (
