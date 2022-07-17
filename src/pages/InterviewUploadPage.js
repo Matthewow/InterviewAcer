@@ -392,7 +392,7 @@ export default function QuestionUploadPage() {
         </>:<></>
         }
 
-        {fillStep != 0?
+        {fillStep !== 0?
         <>
         <Button sx={{mt:5}} variant="contained" color="success" onClick={() => {setFillStep(fillStep - 1)}}>Next</Button>
             <Box maxWidth='500px'>

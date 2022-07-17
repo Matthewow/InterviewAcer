@@ -5,6 +5,7 @@ import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
 import Add from "./../components/Add";
 import { useState, useContext } from "react";
 import KnowledgePage from "./KnowledgePage";
+import ProgrammingPage from "./ProgrammingPage";
 
 function DashBoard() {
   const [mode, setMode] = useState("light");
@@ -30,6 +31,11 @@ function DashBoard() {
       case "knowledge":
         return (
           <KnowledgePage/>
+        );
+
+      case "programming":
+        return (
+          <ProgrammingPage/>
         );
 
       default:

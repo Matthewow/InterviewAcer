@@ -19,7 +19,6 @@ const KnowledgePage = () => {
     "type": 0
 }
 
-
 const [questionListData, setQuestionListData] = useState([]);
 const [displayCard, setDisplayCard] = useState(undefined);
 

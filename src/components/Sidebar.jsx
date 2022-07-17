@@ -69,7 +69,7 @@ import {
               <ListItemButton component="a" href="#programming" 
                 onClick = {
                   e => {
-                    setPage("praogramming")
+                    setPage("programming")
                   }
                 }>
                 <ListItemIcon>
