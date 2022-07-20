@@ -113,7 +113,7 @@ const ProgrammingQuestionPage = () => {
                         setJudgeResult(res.data.data)
                     }
                 })
-              }, 2000);
+              }, 2500);
               return () => clearTimeout(timer);
         } 
     }, [resultCheckInfo]);
@@ -128,12 +128,15 @@ const ProgrammingQuestionPage = () => {
         switch(param) {
             case 'Easy':
             case '1':
+            case 'Accecpted':
                 return 'green';
             case 'Medium':
             case '0':
                 return 'DarkOrange';
             case 'Hard':
             case '2':
+                return 'red';
+            default:
                 return 'red';
         }
       }
@@ -235,35 +238,39 @@ const ProgrammingQuestionPage = () => {
                             <Divider sx={{mt:1}}/>
 
                         <Box  sx={{mt:3}}>
-                            <Typography variant="h6" color = "#666">
-                                Your Submission:
-                            </Typography>
+
 
                             <Stack direction='row' alignItems="flex-end" justifyContent="space-between">
-                                <Typography variant="h6" color = {judgeResult.status === 'Accept' ? 'green' : "red"}>
+                                <Typography variant="h6" color = {judgeResult.status === 'Accepted' ? 'green' : "red"}>
                                     {`${judgeResult.status}` }
                                 </Typography>
+
                                 <Typography variant="body2" color = "grey">
                                     {`${judgeResult.uploadTime.substring(0, 10)} ${judgeResult.uploadTime.substring(11, 19)}` }
                                 </Typography>
                             </Stack>
 
+                            <Typography variant="h6" color = "#666">
+                                Your Submission:
+                            </Typography>
                             
-                            <CodeEditor
-                                value={judgeResult.uploadedCode}
-                                disabled
-                                language="java"
-                                padding={15}
-                                style={{
-                                    lineHeight: 1.5,
-                                    fontSize: 16,
-                                    backgroundColor: "#000",
-                                    fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                                }}
-                            />
+                            <Box>
+                                <CodeEditor
+                                    value={judgeResult.uploadedCode}
+                                    disabled
+                                    language="java"
+                                    padding={15}
+                                    style={{
+                                        lineHeight: 1.5,
+                                        fontSize: 16,
+                                        backgroundColor: "#000",
+                                        fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                                    }}
+                                />
+                            </Box>
                         </Box>
                         {
-                        (judgeResult.failedCases && judgeResult.failedCases.length !== 0 && judgeResult.status !== "Accept") ?
+                        (judgeResult.failedCases && judgeResult.failedCases.length !== 0 && judgeResult.status !== "Accepted") ?
                         <>
                         <Box sx={{mt:2}} >
                             <div data-color-mode="light">
