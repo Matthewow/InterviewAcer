@@ -1,6 +1,7 @@
-import { Card, CardContent, Stack, Typography, Divider } from '@mui/material';
+import { Card, CardContent, Stack, Typography, Divider, CardActionArea } from '@mui/material';
 import React from 'react'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useNavigate } from 'react-router-dom';
 
 export function ProgrammingQuestionListItem({item}) {
 
@@ -15,8 +16,14 @@ export function ProgrammingQuestionListItem({item}) {
     }
   }
 
+  let navigate = useNavigate();
+
     return (
       <Card>
+          <CardActionArea onClick = {()=>{
+              console.log(item)
+              navigate('/programming_question', { state: item });
+          }}>
           <CardContent>
             <Stack direction='row' gap='10px' sx={{display: 'flex', justifyContent: 'space-between'}}>
               <Stack direction='row' spacing='8px'>
@@ -37,13 +44,9 @@ export function ProgrammingQuestionListItem({item}) {
                   {item.title}
                 </Typography>
               </Stack>
-  
-              {/* <Stack direction='row'>
-                <Button variant='contained'>edit</Button>
-                <Button variant='contained' color='error' sx={{ml:1}}>delete</Button>
-              </Stack> */}
             </Stack>
           </CardContent>
+          </CardActionArea>
       </Card>
     );
   }

@@ -29,7 +29,6 @@ const ProgrammingPage = () => {
         console.log(questionListData);
     }, []);
 
-    
 
 
   return (

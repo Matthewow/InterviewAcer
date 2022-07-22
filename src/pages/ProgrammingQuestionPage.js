@@ -6,47 +6,12 @@ import CodeEditor from '@uiw/react-textarea-code-editor';
 import axios from 'axios';
 import { postHeader } from "../utils/fetchData";
 import { LoadingAnimation } from '../components/SmallerComps';
+import { ProgrammingHistoryItem } from '../components/KnowledgeListItem';
+import {useLocation} from 'react-router-dom';
 
 const ProgrammingQuestionPage = () => {
-
-    const questionContent = {
-        "id": 1,
-        "title": "Two sum",
-        "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\r\n\r\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\r\n\r\nYou can return the answer in any order.\r\n\r\n \r\n\r\n**Example 1:**\r\n\r\n```\r\nInput: nums = [2,7,11,15], target = 9\r\nOutput: [0,1]\r\nExplanation: Because nums[0] + nums[1] == 9, we return [0, 1].\r\n```\r\n\r\n\r\n\r\n**Example 2:**\r\n\r\n```\r\nInput: nums = [3,2,4], target = 6\r\nOutput: [1,2]\r\n```\r\n\r\n**Example 3:**\r\n\r\n```\r\nInput: nums = [3,3], target = 6\r\nOutput: [0,1]\r\n```",
-        "level": "Easy",
-        "testCases": [
-            {
-                "param1": [
-                    2,
-                    7,
-                    11,
-                    15
-                ],
-                "param2": 9,
-                "param3": null,
-                "param4": null,
-                "param5": null
-            },
-            {
-                "param1": [
-                    3,
-                    2,
-                    4
-                ],
-                "param2": 6,
-                "param3": null,
-                "param4": null,
-                "param5": null
-            }
-        ],
-        "prepareCode": "public class Solution {\r\n    public int[] twoSum(int[] nums, int target) {\r\n\r\n    }\r\n}",
-        "defaultMethodName": "",
-        "returnType": null,
-        "paramLen": null,
-        "paramTypes": "",
-        "testNum": null,
-        "isPassed": 2
-    }
+    //questionContent = {questionContent}
+    const questionContent = useLocation().state;
 
     const [judgeResult, setJudgeResult] = React.useState({
         "uuid": "",
@@ -56,7 +21,7 @@ const ProgrammingQuestionPage = () => {
         "uploadTime": "2022-07-16T10:09:29.000+00:00",
         "stdout": null,
         "stderr": null,
-        "status": "Reject",
+        "status": "Rejected",
         "failedCases": [
             {
                 "param1": [
@@ -76,6 +41,7 @@ const ProgrammingQuestionPage = () => {
 
     const [code, setCode] = React.useState(questionContent.prepareCode);
     const [pageState, setPageState] = React.useState('coding');
+    const [historyData, setHistoryData] = React.useState([]);
     const [resultCheckInfo, setResultCheckInfo] = React.useState({'id':'', 'waitingTime':''});
     
 
@@ -109,11 +75,23 @@ const ProgrammingQuestionPage = () => {
                     })
                 .then(res => {
                     if (res.status === 200) {
-                        console.log(res.data)
+                        console.log("-----",res.data)
                         setJudgeResult(res.data.data)
                     }
                 })
               }, 2500);
+
+              axios.get(`http://120.77.98.16:8080/programming_service/all_history?questionId=${questionContent.id}`, {
+                    headers: postHeader
+                    })
+                .then(res => {
+                    if (res.status === 200) {
+                        console.log("++++++++++",res.data)
+                        setHistoryData(res.data.data.historyRecord)
+
+                    }
+                })
+
               return () => clearTimeout(timer);
         } 
     }, [resultCheckInfo]);
@@ -201,7 +179,7 @@ const ProgrammingQuestionPage = () => {
                                     style={{
                                         lineHeight: 1.5,
                                         fontSize: 16,
-                                        backgroundColor: "#111",
+                                        backgroundColor: "#000",
                                         fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
                                     }}
                                 />
@@ -216,7 +194,6 @@ const ProgrammingQuestionPage = () => {
         )
     }
     else{
-        console.log(judgeResult);
         return (
             <>
                 <Stack direction="row" spacing={2} justifyContent="space-between" sx={{m: 5}}>
@@ -269,6 +246,16 @@ const ProgrammingQuestionPage = () => {
                                 />
                             </Box>
                         </Box>
+                        
+                        {
+                            judgeResult.stderr?
+                            <>
+                            <Typography sx={{m:2}} variant="caption"
+                            style={{ display: "inline-block", whiteSpace: "pre-line" }}>{judgeResult.stderr}</Typography>
+                            </>
+                            :<></>
+                        }
+
                         {
                         (judgeResult.failedCases && judgeResult.failedCases.length !== 0 && judgeResult.status !== "Accepted") ?
                         <>
@@ -296,8 +283,14 @@ const ProgrammingQuestionPage = () => {
 
                     <Box flex={3} p={2} height="100vh" display="flex" flexDirection="column">
                     
-                        <Typography variant='h2' color="#888">History (to be done)</Typography>
-                        
+                        <Typography variant='h4' color="#888">Your Submission History</Typography>
+                        <Stack direction="column" spacing={1} sx={{mt:2}}>
+                            {historyData?.map((item) => (
+                                <>
+                                <ProgrammingHistoryItem item = {item}/>
+                                </>
+                            ))}
+                        </Stack>
   
                     </Box>
 

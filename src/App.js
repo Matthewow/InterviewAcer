@@ -16,6 +16,7 @@ import Info from './components/Info';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
 import MyPostPage from './pages/MyPostPage';
+import ProgrammingQuestionPage from './pages/ProgrammingQuestionPage';
 
 
 // https://www.youtube.com/watch?v=aTPkos3LKi8&ab_channel=LamaDev
@@ -37,6 +38,7 @@ function App() {
         <Route exact path="/info" element={<Info />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/mypost" element={<MyPostPage />} />
+        <Route exact path="/programming_question" element={<ProgrammingQuestionPage />} />
       </Routes>
     </BrowserRouter>
   );

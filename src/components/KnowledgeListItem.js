@@ -50,29 +50,29 @@ export  function KnowledgeCommentItem({data}) {
     <List sx={{  bgcolor: 'background.paper' }}>
       {data?.map((item) => (
         <Box key = {item.knowledgeCommentId} maxWidth='400px'>
-        <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar aria-label="recipe">
-            {item.userName[0]}
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={item.userName}
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline'}}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                {`${item.lastModifiedTime.substring(0, 10)} ${item.lastModifiedTime.substring(11, 16)} \n`}
-              </Typography>
+          <ListItem alignItems="flex-start">
+          <ListItemAvatar>
+            <Avatar aria-label="recipe">
+              {item.userName[0]}
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={item.userName}
+            secondary={
+              <React.Fragment>
+                <Typography
+                  sx={{ display: 'inline'}}
+                  component="span"
+                  variant="body2"
+                  color="text.primary"
+                >
+                  {`${item.lastModifiedTime.substring(0, 10)} ${item.lastModifiedTime.substring(11, 16)} \n`}
+                </Typography>
 
-              <Typography component="span" style={{ wordWrap: "break-word" }}>{item.content}</Typography>
-              
-            </React.Fragment>
-          }
+                <Typography component="span" style={{ wordWrap: "break-word" }}>{item.content}</Typography>
+                
+              </React.Fragment>
+        }
         />
       </ListItem>
       <Divider variant="inset" component="li" />
@@ -101,6 +101,24 @@ export function InterviewPreviewItem({item}) {
               <Button variant='contained'>edit</Button>
               <Button variant='contained' color='error' sx={{ml:1}}>delete</Button>
             </Stack>
+          </Stack>
+        </CardContent>
+    </Card>
+  );
+}
+
+export function ProgrammingHistoryItem({item}) {
+  return (
+    <Card>
+        <CardContent>
+          <Stack direction='row' gap='10px' sx={{display: 'flex', justifyContent: 'space-between'}}>
+              <Typography variant="body1" color = {item.status === 'Accepted' ? 'green' : "red"}>
+                  {`${item.status}` }
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ml:1}}>
+                {`${item.uploadTime.substring(0, 10)} ${item.uploadTime.substring(11, 16)}`}
+              </Typography>
+
           </Stack>
         </CardContent>
     </Card>
