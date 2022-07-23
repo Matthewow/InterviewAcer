@@ -22,12 +22,7 @@ const KnowledgePage = () => {
 const [questionListData, setQuestionListData] = useState([]);
 const [displayCard, setDisplayCard] = useState(undefined);
 
-useEffect(() => {
-  console.log(questionListData)
-}, [questionListData]);
-
 function handleSubmit() {
-  console.log('posted', postHeader);
   axios.post(`http://120.77.98.16:8080/knowledge_load/`, requestBody, {
     headers: {
       'Content-Type': 'application/json',

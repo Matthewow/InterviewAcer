@@ -43,7 +43,7 @@ import {
               <ListItemButton component="a" href="#interviews"
               onClick = {
                 e => {
-                  setPage("interviews")
+                  setPage("interview")
                 }
               }>
                 <ListItemIcon>

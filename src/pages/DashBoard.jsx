@@ -6,6 +6,7 @@ import Add from "./../components/Add";
 import { useState, useContext } from "react";
 import KnowledgePage from "./KnowledgePage";
 import ProgrammingPage from "./ProgrammingPage";
+import InterviewPage from "./InterviewPage";
 
 function DashBoard() {
   const [mode, setMode] = useState("light");
@@ -32,6 +33,11 @@ function DashBoard() {
         return (
           <KnowledgePage/>
         );
+
+      case "interview":
+          return (
+            <InterviewPage/>
+          );
 
       case "programming":
         return (

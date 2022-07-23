@@ -21,7 +21,6 @@ export function ProgrammingQuestionListItem({item}) {
     return (
       <Card>
           <CardActionArea onClick = {()=>{
-              console.log(item)
               navigate('/programming_question', { state: item });
           }}>
           <CardContent>
