@@ -32,6 +32,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function InterviewMainPageTable({data}) {
     let navigate = useNavigate();
+    console.log('====================================');
+    console.log(data);
+    console.log('====================================');
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 300 }} aria-label="customized table">
@@ -59,7 +62,7 @@ export default function InterviewMainPageTable({data}) {
               <StyledTableCell>{item.position}</StyledTableCell>
               <StyledTableCell>{item.level}</StyledTableCell>
               <StyledTableCell>{item.questions.queryInfo.totalRecord}</StyledTableCell>
-              <StyledTableCell>{item.providerName}</StyledTableCell>
+              <StyledTableCell>{item.userName}</StyledTableCell>
               <StyledTableCell><Button variant='outlined' onClick={()=>{
                 navigate('/single_interview', { state: item.interviewId });
             }}>more</Button></StyledTableCell>

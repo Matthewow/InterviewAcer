@@ -93,7 +93,7 @@ import {
             <Player
               loop
               src="https://assets9.lottiefiles.com/packages/lf20_wczpanc1.json"
-              style={{ height: '300px', width: '300px' }}
+              style={{ height: '200px', width: '200px' }}
               >
               <Controls visible={false} buttons={['play', 'repeat', 'frame', 'debug']} />
             </Player>

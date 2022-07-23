@@ -24,9 +24,11 @@ export function KnowledgeListItem({item, setDisplayCard}) {
       <CardActionArea>
         <CardContent>
           <Stack direction='row' gap='10px'>
+            {item.company?
             <Typography gutterBottom variant="h6" component="div" color='primary'>
-              {item.company}
-            </Typography>
+            {item.company}
+          </Typography>:<></>}
+            
 
             <Typography gutterBottom variant="h6" component="div" color='secondary'>
               {item.tag}

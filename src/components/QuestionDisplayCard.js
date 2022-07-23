@@ -42,8 +42,9 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
   const [commentContent, setCommentContent] = React.useState('');
   const [isCommentsDisplayed, setIsCommentsDisplayed] = React.useState(true);
   const [isLiked, setIsLiked] = React.useState(false);
-
+  
   React.useEffect(() => {
+    
     setCommentCount(questioncard.comments.queryInfo.totalRecord);
     setAnswersCount(questioncard.answers.queryInfo.totalRecord);
     setIsLiked(questioncard.isLiked === 0? false: true)
