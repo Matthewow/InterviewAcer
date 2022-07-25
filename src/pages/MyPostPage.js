@@ -28,7 +28,7 @@ const PageSideBar = () => {
                     <ListItemIcon>
                         <AdjustIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Interview(tbd)" />
+                    <ListItemText primary="Interview" />
                 </ListItemButton>
                 </ListItem>
 

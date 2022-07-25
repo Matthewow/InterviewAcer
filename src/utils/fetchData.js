@@ -1,9 +1,7 @@
-import axios from "axios";
-
 
 export const postHeader = {
     'Content-Type': 'application/json',
-    'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDc5MzEyLCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.j3fxGfYyRhKB1o7DnNIm0-QczvO0fLS5rF5FfnkGIrI'
+    'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjYwNTQwMDAwLCJpbmZvIjp7ImFkbWluIjoxLCJ1c2VybmFtZSI6IkFjZSBDb2RlciJ9fQ.mECkGz0aNvtBABclS_33r0Sa-gJ2Pt3lZrN7IjCUL5Y'
 };
   
 export const fetchData = async (suburl) => {

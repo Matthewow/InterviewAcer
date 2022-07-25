@@ -21,13 +21,36 @@ const KnowledgePage = () => {
 
 const [questionListData, setQuestionListData] = useState([]);
 const [displayCard, setDisplayCard] = useState(undefined);
+const [questionSelectedType, setQuestionSelectedType] = useState(0);
+const [companySelected, setCompanySelected] = useState(0);
+
+useEffect(() => {
+  handleSubmit();
+}, []);
+
+useEffect(() => {
+  if (questionListData.length !== 0){
+    setDisplayCard(questionListData[0])
+  }
+}, [questionListData]);
+
 
 function handleSubmit() {
+
+  const requestBody = {
+    "pageFirst": 1,
+    "pageSizeFirst": 30,
+    "pageSecond": 1,
+    "pageSizeSecond": 20,
+    "pageThird": 1,
+    "pageSizeThird": 20,
+    "type": 0,
+    "tag1": companySelected ? companySelected.label:"",
+    "tag2": questionSelectedType? questionSelectedType.label: ""
+}
+
   axios.post(`http://120.77.98.16:8080/knowledge_load/`, requestBody, {
-    headers: {
-      'Content-Type': 'application/json',
-      'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
-  }
+    headers: postHeader
   })
   .then(res => {
     console.log(res)
@@ -36,14 +59,8 @@ function handleSubmit() {
           setQuestionListData(res.data.data.entities)
     }
   })
-
 }
 
-function check(){
-  console.log('====================================');
-  console.log(displayCard);
-  console.log('====================================');
-}
 
   return (
     <>
@@ -82,6 +99,7 @@ function check(){
                     }}
                     id="combo-box-demo"
                     options={questionTypeLabels}
+                    onChange={(event, value) => setQuestionSelectedType(value)}
                     renderInput={(params) => <TextField {...params} label="Question Type" />}
                     />
 
@@ -94,13 +112,11 @@ function check(){
                     
                     id="combo-box-demo"
                     options={companyNames}
-                    // onChange={(e, thisTag) =>
-                    //     setQuestionData({ ...questionData, companyTag: thisTag.label })
-                    //   }
+                    onChange={(event, value) => setCompanySelected(value)}
                     renderInput={(params) => <TextField {...params} label="Company Name" />}
                     />    
-                    <Button sx={{ml:2}} onClick={handleSubmit}> Search </Button>
-                    <Button sx={{ml:2}} onClick={check}> Search ALL </Button>
+
+                    <Button sx={{ml:2}} onClick={handleSubmit}> Search</Button>
                   </Stack>
 
 

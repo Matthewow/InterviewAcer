@@ -3,6 +3,7 @@ import { Box } from '@mui/system'
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { ProgrammingQuestionListItem } from '../components/ProgrammingQuestionListItem'
+import { postHeader } from '../utils/fetchData'
 
 const ProgrammingPage = () => {
 
@@ -14,10 +15,7 @@ const ProgrammingPage = () => {
 
     useEffect(() => {
         axios.post(`http://120.77.98.16:8080/programming_service/get_questions/`, requestBody, {
-        headers: {
-            'Content-Type': 'application/json',
-            'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
-        }
+        headers: postHeader
         })
         .then(res => {
             if (res.status === 200) {

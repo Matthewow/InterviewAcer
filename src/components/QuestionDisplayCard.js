@@ -19,6 +19,7 @@ import { Box } from '@mui/system';
 import axios from 'axios';
 import { KnowledgeCommentItem } from './KnowledgeListItem';
 import MDEditor from '@uiw/react-md-editor';
+import { postHeader } from '../utils/fetchData';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -60,10 +61,7 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
   }
     console.log('Comment posted', commentContent);
     axios.post(url, requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
-    }
+      headers: postHeader
     })
     .then(res => {
       if (res.status === 200) {
@@ -83,10 +81,7 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
     }
 
     axios.post(url, requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
-      }
+      headers: postHeader
     })
     .then(res => {
       if (res.status === 200) {
@@ -103,10 +98,7 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
   const refreshThisCard = () => {
     console.log('Comment posted', commentContent);
     axios.get(`http://120.77.98.16:8080/knowledge_service?uuid=${questioncard.knowledgeId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjU4NDY4MTA2LCJpbmZvIjp7ImFkbWluIjowLCJ1c2VybmFtZSI6IjEyMyJ9fQ.ZNpIvYGf8PHyJcS-vJUZtKOdYnWnIaWIwdn1uHziBis'
-    }
+      headers: postHeader
     })
     .then(res => {
       if (res.status === 200) {

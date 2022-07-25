@@ -14,6 +14,8 @@ import Avatar from '@mui/material/Avatar';
 export function KnowledgeListItem({item, setDisplayCard}) {
   return (
     <Card 
+
+      sx={{m:1}}
        
       onClick={() => {
         setDisplayCard(item);
