@@ -11,28 +11,31 @@ import { KnowledgeListItem } from '../components/KnowledgeListItem';
 import InterviewMainPageTable from '../components/InterviewMainPageTable';
 
 
-const MyPostPage = () => {
+const MyCollectionPage = () => {
     const [select, setSelect] = useState('knowledge');
-    const [myPostData, setMyPostData] = useState();
+    const [MyCollectionData, setMyCollectionData] = useState();
     const [displayCard, setDisplayCard] = useState();
 
     useEffect(() => {
-        axios.get(`http://120.77.98.16:8080/my_posts`, {
+        axios.get(`http://120.77.98.16:8080/users_like`, {
         headers: postHeader
         })
         .then(res => {
         if (res.status === 200) {
             if (res.data.code === '00') 
-                setMyPostData(res.data.data)
+                setMyCollectionData(res.data.data.entities)
             }
         })
         
     }, []);
 
     useEffect(() => {
-        if (myPostData!== undefined)
-       setDisplayCard(myPostData.questions.entities[0])
-    }, [myPostData]);
+        console.log('====================================');
+        console.log(MyCollectionData);
+        console.log('====================================');
+        if (MyCollectionData!== undefined && MyCollectionData.knowledge.entities.length > 0)
+            setDisplayCard(MyCollectionData.knowledge.entities[0])
+    }, [MyCollectionData]);
 
 
     return (
@@ -77,13 +80,13 @@ const MyPostPage = () => {
         </Box>
         </>
         
-        {myPostData && displayCard?
+        {MyCollectionData && displayCard?
         <>
 
         {select === "knowledge"?
         <>
             <Box flex={3} p={2} sx={{}}>
-                {myPostData.questions.entities?.map((item) => (
+                {MyCollectionData.knowledge.entities?.map((item) => (
                     <KnowledgeListItem 
                       key = {item.knowledgeId}
                       item = {item}
@@ -94,8 +97,8 @@ const MyPostPage = () => {
             </Box>
 
             <Box flex={4} p={2} sx={{}}>
-
-            {/* <QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard}/> */}
+{/* 
+            <QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard}/> */}
                
             </Box>
         
@@ -104,7 +107,7 @@ const MyPostPage = () => {
         <>
             <Box flex={7} p={2} sx={{}}>
             
-                <InterviewMainPageTable data = {myPostData.interviews.entities}/>
+                <InterviewMainPageTable data = {MyCollectionData.interviews.entities}/>
 
             </Box>
         
@@ -123,4 +126,4 @@ const MyPostPage = () => {
     );
 }
 
-export default MyPostPage
+export default MyCollectionPage

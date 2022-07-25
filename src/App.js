@@ -18,6 +18,7 @@ import Profile from './pages/Profile';
 import MyPostPage from './pages/MyPostPage';
 import ProgrammingQuestionPage from './pages/ProgrammingQuestionPage';
 import SingleInterviewPage from './pages/SingleInterviewPage';
+import MyCollectionPage from './pages/MyCollectionPage';
 
 
 // https://www.youtube.com/watch?v=aTPkos3LKi8&ab_channel=LamaDev
@@ -39,6 +40,7 @@ function App() {
         <Route exact path="/info" element={<Info />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/mypost" element={<MyPostPage />} />
+        <Route exact path="/mycollection" element={<MyCollectionPage/>} />
         <Route exact path="/programming_question" element={<ProgrammingQuestionPage />} />
         <Route exact path="/single_interview" element={<SingleInterviewPage />} />
       </Routes>

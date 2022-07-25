@@ -32,9 +32,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function InterviewMainPageTable({data}) {
     let navigate = useNavigate();
-    console.log('====================================');
-    console.log(data);
-    console.log('====================================');
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 300 }} aria-label="customized table">
@@ -45,9 +43,10 @@ export default function InterviewMainPageTable({data}) {
             <StyledTableCell> Location </StyledTableCell>
             <StyledTableCell> Position </StyledTableCell>
             <StyledTableCell> Level</StyledTableCell>
-            <StyledTableCell> # Questions</StyledTableCell>
+            {data.interviewList && data.interviewList[0].item.questions.queryInfo ?  <StyledTableCell> # Questions</StyledTableCell> : <></>}
             <StyledTableCell> Provider</StyledTableCell>
             <StyledTableCell> </StyledTableCell>
+            
           </TableRow>
         </TableHead>
 
@@ -61,7 +60,7 @@ export default function InterviewMainPageTable({data}) {
               <StyledTableCell>{item.location}</StyledTableCell>
               <StyledTableCell>{item.position}</StyledTableCell>
               <StyledTableCell>{item.level}</StyledTableCell>
-              <StyledTableCell>{item.questions.queryInfo.totalRecord}</StyledTableCell>
+              {item.questions.queryInfo ?  <StyledTableCell>{item.questions.queryInfo.totalRecord}</StyledTableCell> : <></>}
               <StyledTableCell>{item.userName}</StyledTableCell>
               <StyledTableCell><Button variant='outlined' onClick={()=>{
                 navigate('/single_interview', { state: item.interviewId });

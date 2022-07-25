@@ -11,6 +11,7 @@ const SingleInterviewPage = () => {
     const interviewId = useLocation().state;
     const [interviewData, setInterviewData] = useState();
     const [displayCard, setDisplayCard] = useState();
+    const [isLiked, setIsLiked] = React.useState(false);
 
 
     useEffect(() => {
@@ -20,7 +21,11 @@ const SingleInterviewPage = () => {
         .then(res => {
             if (res.status === 200 && res.data.code === "00") {
                 setInterviewData(res.data.data)
+                console.log('====================================');
+                console.log(res.data.data);
+                console.log('====================================');
                 setDisplayCard(res.data.data.questions.entities[0])
+                setIsLiked(res.data.data.interview.isLiked === 0? false: true)
             }
         })
         
@@ -65,7 +70,7 @@ const SingleInterviewPage = () => {
 
                         <Stack direction='row' spacing={4}>
                             <Typography gutterBottom variant="h6" component="div" color="secondary" fontWeight={800}>
-                                {`Job Position:`}
+                                {`Position :`}
                             </Typography>
                             <Button variant='text'> {interviewData.interview.position}</Button>
                         </Stack>
@@ -83,6 +88,15 @@ const SingleInterviewPage = () => {
                             </Typography>
                             <Button variant='text'> {interviewData.interview.company}</Button>
                         </Stack>
+
+                        {/* <IconButton aria-label="add to favorites">
+                        <Checkbox
+                            icon={<FavoriteBorder />}
+                            checkedIcon={<Favorite sx={{ color: "red" }} />}
+                            checked = {isLiked}
+                            onChange = {handleLiked}
+                        />
+                        </IconButton> */}
 
                     </Box>
                     

@@ -64,12 +64,6 @@ const Navbar = () => {
         <Pets sx={{ display: { xs: "block", sm: "none" } }} />
 
         <Icons>
-          <Badge badgeContent={4} color="error">
-            <Mail />
-          </Badge>
-          <Badge badgeContent={2} color="error">
-            <Notifications />
-          </Badge>
           <Avatar
             sx={{ width: 30, height: 30 }}
             alt="WANG Zhao" 
@@ -115,11 +109,11 @@ const Navbar = () => {
           </MenuItem>
         </Link>
 
-        <Link to='/profile' style={{ textDecoration: 'none', color:"#222"}} onClick={(e) => setOpen(false)}>
+        <Link to='/mycollection' style={{ textDecoration: 'none', color:"#222"}} onClick={(e) => setOpen(false)}>
           <MenuItem >
             <StarBorderIcon color = "grey" sx={{mr:1}}/>
             My Collecton
-          </MenuItem>
+            </MenuItem>
         </Link>
 
         <Link to='/profile' style={{ textDecoration: 'none', color:"#222"}}>
