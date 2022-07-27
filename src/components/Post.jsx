@@ -39,7 +39,7 @@ export default function Post( {JobData}) {
   return (
     <Card sx={{m:5}}>
       <CardContent>
-        <Typography variant="h4" color="darkblue">
+        <Typography variant="h4" color="primary">
           {`${JobData.company} - ${JobData.jobPosition ? JobData.jobPosition : 'Not Specified'} -  ${JobData.jobLocation}`}
         </Typography>
 

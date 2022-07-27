@@ -23,7 +23,8 @@ const MyCollectionPage = () => {
         .then(res => {
         if (res.status === 200) {
             if (res.data.code === '00') 
-                setMyCollectionData(res.data.data.entities)
+                setMyCollectionData(res.data.data)
+                console.log(res.data);
             }
         })
         
@@ -33,8 +34,8 @@ const MyCollectionPage = () => {
         console.log('====================================');
         console.log(MyCollectionData);
         console.log('====================================');
-        if (MyCollectionData!== undefined && MyCollectionData.knowledge.entities.length > 0)
-            setDisplayCard(MyCollectionData.knowledge.entities[0])
+        if (MyCollectionData!== undefined && MyCollectionData.questions.entities.length > 0)
+            setDisplayCard(MyCollectionData.questions.entities[0])
     }, [MyCollectionData]);
 
 
@@ -86,7 +87,7 @@ const MyCollectionPage = () => {
         {select === "knowledge"?
         <>
             <Box flex={3} p={2} sx={{}}>
-                {MyCollectionData.knowledge.entities?.map((item) => (
+                {MyCollectionData.questions.entities?.map((item) => (
                     <KnowledgeListItem 
                       key = {item.knowledgeId}
                       item = {item}
@@ -97,9 +98,7 @@ const MyCollectionPage = () => {
             </Box>
 
             <Box flex={4} p={2} sx={{}}>
-{/* 
-            <QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard}/> */}
-               
+                <QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard}/>
             </Box>
         
         </>
