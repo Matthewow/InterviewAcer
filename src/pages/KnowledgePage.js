@@ -6,8 +6,16 @@ import {postHeader } from '../utils/fetchData'
 import axios from 'axios';
 import { companyNames, questionTypeLabels } from "../utils/labelData";
 import {KnowledgeListItem } from '../components/KnowledgeListItem'
+import { useNavigate } from 'react-router-dom'
 
-const KnowledgePage = () => {
+const KnowledgePage = ({token, setToken}) => {
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (token === "")
+      navigate('/signin')
+  }, [token]);
 
   const requestBody = {
     "pageFirst": 1,
@@ -49,14 +57,17 @@ function handleSubmit() {
     "tag2": questionSelectedType? questionSelectedType.label: ""
 }
 
-  axios.post(`http://120.77.98.16:8080/knowledge_load/`, requestBody, {
-    headers: postHeader
+  axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/knowledge_load/`, requestBody, {
+    headers: postHeader(token)
   })
   .then(res => {
-    console.log(res)
     if (res.status === 200) {
-      if (res.data.code === '00') 
-          setQuestionListData(res.data.data.entities)
+      if (res.data.code === '00') {
+          setQuestionListData(res.data.data.entities);
+          setToken(res.data.token);
+      }
+      else if ((res.data.code === '97' || (res.data.code === '98')))
+          navigate('/signin')
     }
   })
 }
@@ -67,9 +78,8 @@ function handleSubmit() {
     <Box flex={6} p={{ xs: 0, md: 2 }}>
         <Stack direction='row' sx ={{mr:5}}>
             <Box flex={3} sx ={{mr:5, width : '100%'}}>
-                {/* <Box position = 'fixed' > */}
                 <Box >
-                  {displayCard === undefined ? <LoadingAnimation/>: <><QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard}/></>}
+                  {displayCard === undefined ? <LoadingAnimation/>: <><QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard} token = {token}/></>}
                 </Box>
             </Box>
 

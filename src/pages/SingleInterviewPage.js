@@ -2,30 +2,32 @@ import { Button, Paper, Stack, Typography } from '@mui/material'
 import { Box, textAlign } from '@mui/system'
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import { KnowledgeListItem } from '../components/KnowledgeListItem';
 import QuestionDisplayCard from '../components/QuestionDisplayCard';
 import { postHeader } from '../utils/fetchData';
 
-const SingleInterviewPage = () => {
+const SingleInterviewPage = ({token, setToken}) => {
     const interviewId = useLocation().state;
     const [interviewData, setInterviewData] = useState();
     const [displayCard, setDisplayCard] = useState();
     const [isLiked, setIsLiked] = React.useState(false);
+    let navigate = useNavigate();
 
 
     useEffect(() => {
-        axios.get(`http://120.77.98.16:8080/interview_service/query?interviewId=${interviewId}`, {
-            headers: postHeader
+        axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/interview_service/query?interviewId=${interviewId}`, {
+                headers: postHeader(token)
             })
         .then(res => {
-            if (res.status === 200 && res.data.code === "00") {
-                setInterviewData(res.data.data)
-                console.log('====================================');
-                console.log(res.data.data);
-                console.log('====================================');
-                setDisplayCard(res.data.data.questions.entities[0])
-                setIsLiked(res.data.data.interview.isLiked === 0? false: true)
+            if (res.status === 200) {
+                if (res.data.code === "00"){
+                    setInterviewData(res.data.data)
+                    setDisplayCard(res.data.data.questions.entities[0])
+                    setIsLiked(res.data.data.interview.isLiked === 0? false: true)
+                }
+                else if ((res.data.code === '97' || (res.data.code === '98')))
+                    navigate('/signin')
             }
         })
         
@@ -121,7 +123,7 @@ const SingleInterviewPage = () => {
                 <Box p={2} height="100vh" display="flex" flexDirection="column" width="600px">
                     {displayCard === undefined ? <></>
                     :
-                    <QuestionDisplayCard questioncard={displayCard} setDisplayCard = {setDisplayCard}/>
+                    <QuestionDisplayCard questioncard={displayCard} setDisplayCard = {setDisplayCard} token = {token}/>
                     }
                 </Box>
 

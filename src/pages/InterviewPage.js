@@ -1,11 +1,17 @@
 import { Box, Typography, Stack, Card, CardActions, CardMedia, CardContent,Button } from '@mui/material'
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import InterviewMainPageTable from '../components/InterviewMainPageTable';
 import { LottieCom } from '../components/SmallerComps';
 import { postHeader } from '../utils/fetchData';
 
-const InterviewPage = () => {
+const InterviewPage = ({token, setToken}) => {
+  let navigate = useNavigate();
+  useEffect(() => {
+      if (token === "")
+        navigate('/signin')
+  }, [token]);
 
   const [interviewList, setInterviewList] = useState([]);
   const [interviewNewest, setInterviewNewest] = useState("");
@@ -16,12 +22,15 @@ const InterviewPage = () => {
     }
 
   useEffect(() => {
-    axios.post(`http://120.77.98.16:8080/interview_service/load/`, requestBody, {headers: postHeader})
+    axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/interview_service/load/`, requestBody, {headers: postHeader(token)})
     .then(res => {
     if (res.status === 200) {
-      if (res.data.code === '00') 
+      if (res.data.code === '00'){
           setInterviewList(res.data.data.entities);
           setInterviewNewest(res.data.data.entities[0])
+      }
+      else if ((res.data.code === '97' || (res.data.code === '98')))
+        navigate('/signin')
     }
   })
   }, []);

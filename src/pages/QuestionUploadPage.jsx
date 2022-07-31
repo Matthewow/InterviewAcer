@@ -6,7 +6,7 @@ import axios from 'axios';
 import { companyNames, questionTypeLabels } from "../utils/labelData";
 import { postHeader } from "../utils/fetchData";
 
-export default function QuestionUploadPage() {
+export default function QuestionUploadPage({token, setToken}) {
   // https://uiwjs.github.io/react-md-editor/
 
   const [questionData, setQuestionData] = useState({
@@ -25,7 +25,7 @@ export default function QuestionUploadPage() {
   }
 
   const handleSubmit = () => {
-    console.log(questionData);
+    //console.log(questionData);
     postQuestion();
 
   };
@@ -38,18 +38,18 @@ export default function QuestionUploadPage() {
         "tag": questionData.quetionTag
     };
 
-    console.log(postData)
+    //console.log(postData)
 
-    axios.post(`http://120.77.98.16:8080/knowledge_service`, postData, {
-      headers: postHeader
+    axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/knowledge_service`, postData, {
+      headers: postHeader(token)
     })
       .then(res => {
-        console.log(res)
+        //console.log(res)
         if (res.status === 200) {
-          console.log(res.data);
+          //console.log(res.data);
           if (res.data.code === '00') {
             setQuestionContent(defaultData.value)
-            navigate('/info', { state: {
+              navigate('/info', { state: {
                 info: "success",
                 content: "Successfully Uploaded",
                 backto: "/question_upload"

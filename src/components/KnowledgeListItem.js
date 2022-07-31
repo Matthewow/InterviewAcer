@@ -19,8 +19,6 @@ export function KnowledgeListItem({item, setDisplayCard}) {
        
       onClick={() => {
         setDisplayCard(item);
-        console.log(`set display to }`);
-        console.log(item);
       }}
     >
       <CardActionArea>

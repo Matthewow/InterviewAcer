@@ -7,10 +7,15 @@ import axios from 'axios';
 import { postHeader } from "../utils/fetchData";
 import { LoadingAnimation } from '../components/SmallerComps';
 import { ProgrammingHistoryItem } from '../components/KnowledgeListItem';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
-const ProgrammingQuestionPage = () => {
-    //questionContent = {questionContent}
+const ProgrammingQuestionPage = ({token, setToken}) => {
+    let navigate = useNavigate();
+    React.useEffect(() => {
+        if (token === "")
+            navigate('/signin')
+    }, [token]);
+
     const questionContent = useLocation().state;
 
     const [judgeResult, setJudgeResult] = React.useState({
@@ -53,15 +58,17 @@ const ProgrammingQuestionPage = () => {
             "lang": "Java"
         }
 
-        axios.post(`http://120.77.98.16:8080/programming_service/judgement/`, requestBody, {
-            headers: postHeader
-            })
+        axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/programming_service/judgement/`, requestBody, {
+            headers: postHeader(token)
+        })
         .then(res => {
             if (res.status === 200) {
-            if (res.data.code === '00') 
-                setPageState('waiting')
-                setResultCheckInfo({'id':res.data.data.uuid, 'waitingTime':res.data.data.waitMinutesToRequest})
-                console.log('Submitted')
+
+                if (res.data.code === '00') {
+                    setPageState('waiting')
+                    setResultCheckInfo({'id':res.data.data.uuid, 'waitingTime':res.data.data.waitMinutesToRequest})
+                    setToken(res.data.token);
+                }
             }
         })
     }
@@ -69,26 +76,22 @@ const ProgrammingQuestionPage = () => {
     React.useEffect(() => {
         if(resultCheckInfo.id !== ''){
             const timer = setTimeout(() => {
-                console.log('Result requested');
-                axios.get(`http://120.77.98.16:8080/programming_service/one_history?uuid=${resultCheckInfo.id}`, {
-                    headers: postHeader
+                axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/programming_service/one_history?uuid=${resultCheckInfo.id}`, {
+                    headers: postHeader(token)
                     })
                 .then(res => {
                     if (res.status === 200) {
-                        console.log("-----",res.data)
                         setJudgeResult(res.data.data)
                     }
                 })
               }, 2500);
 
-              axios.get(`http://120.77.98.16:8080/programming_service/all_history?questionId=${questionContent.id}`, {
-                    headers: postHeader
+              axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/programming_service/all_history?questionId=${questionContent.id}`, {
+                    headers: postHeader(token)
                     })
                 .then(res => {
                     if (res.status === 200) {
-                        console.log("++++++++++",res.data)
                         setHistoryData(res.data.data.historyRecord)
-
                     }
                 })
 
@@ -287,14 +290,13 @@ const ProgrammingQuestionPage = () => {
                         <Stack direction="column" spacing={1} sx={{mt:2}}>
                             {historyData?.map((item) => (
                                 <>
-                                <ProgrammingHistoryItem item = {item}/>
+                                <ProgrammingHistoryItem item = {item} key = {item.uuid}/>
                                 </>
                             ))}
                         </Stack>
   
                     </Box>
 
-                    
                 </Stack>
             </>
         )

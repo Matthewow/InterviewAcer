@@ -96,8 +96,7 @@ import {
               aria-label="vertical contained button group"
               variant="text"
             >
-              <Button >
-                Simple Post</Button>
+
               <Link to="/question_upload" style={{ textDecoration: 'none' }}>
                 <Button> Interview Question</Button>
               </Link>

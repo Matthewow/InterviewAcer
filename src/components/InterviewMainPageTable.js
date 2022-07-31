@@ -33,10 +33,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function InterviewMainPageTable({data}) {
     let navigate = useNavigate();
 
-    console.log('====================================');
-    console.log(data);
-    console.log('====================================');
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 300 }} aria-label="customized table">

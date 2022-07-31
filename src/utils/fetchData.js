@@ -1,7 +1,8 @@
-
-export const postHeader = {
+export function postHeader (token) {
+  return {
     'Content-Type': 'application/json',
-    'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjNAcXEuY29tIiwiZXhwIjoxNjYwNTQwMDAwLCJpbmZvIjp7ImFkbWluIjoxLCJ1c2VybmFtZSI6IkFjZSBDb2RlciJ9fQ.mECkGz0aNvtBABclS_33r0Sa-gJ2Pt3lZrN7IjCUL5Y'
+    'token': token ? token : ""
+  }
 };
   
 export const fetchData = async (suburl) => {

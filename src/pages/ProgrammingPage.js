@@ -2,10 +2,17 @@ import { Stack, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ProgrammingQuestionListItem } from '../components/ProgrammingQuestionListItem'
 import { postHeader } from '../utils/fetchData'
 
-const ProgrammingPage = () => {
+const ProgrammingPage = ({token, setToken}) => {
+
+    let navigate = useNavigate();
+    useEffect(() => {
+        if (token === "")
+            navigate('/signin')
+    }, [token]);
 
     const requestBody = {
         "pageFirst":1,
@@ -14,17 +21,19 @@ const ProgrammingPage = () => {
     const [questionListData, setQuestionListData] = useState([]);
 
     useEffect(() => {
-        axios.post(`http://120.77.98.16:8080/programming_service/get_questions/`, requestBody, {
-        headers: postHeader
+        axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/programming_service/get_questions/`, requestBody, {
+        headers: postHeader(token)
         })
         .then(res => {
             if (res.status === 200) {
-            if (res.data.code === '00') 
+            if (res.data.code === '00'){
                 setQuestionListData(res.data.data.entities)
+                setToken(res.data.token);
+                }
+            else if ((res.data.code === '97' || (res.data.code === '98')))
+                navigate('/signin')
             }
         })
-
-        console.log(questionListData);
     }, []);
 
 

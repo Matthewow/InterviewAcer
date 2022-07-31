@@ -7,11 +7,20 @@ import { useState, useContext } from "react";
 import KnowledgePage from "./KnowledgePage";
 import ProgrammingPage from "./ProgrammingPage";
 import InterviewPage from "./InterviewPage";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-function DashBoard() {
+function DashBoard({token, setToken}) {
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (token === "")
+      navigate('/signin')
+  }, [token]);
+  
   const [mode, setMode] = useState("light");
   const [page, setPage] = useState("homepage");
-  // const Context = React.createContexs
 
   const darkTheme = createTheme({
     palette: {
@@ -24,24 +33,24 @@ function DashBoard() {
       case "homepage":
         return (
           <>
-            <Feed />
-            <Rightbar />
+            <Feed token = {token} setToken = {setToken}/>
+            <Rightbar token = {token} setToken = {setToken}/>
           </>
         );
 
       case "knowledge":
         return (
-          <KnowledgePage/>
+          <KnowledgePage token = {token} setToken = {setToken}/>
         );
 
       case "interview":
           return (
-            <InterviewPage/>
+            <InterviewPage token = {token} setToken = {setToken}/>
           );
 
       case "programming":
         return (
-          <ProgrammingPage/>
+          <ProgrammingPage token = {token} setToken = {setToken}/>
         );
 
       default:

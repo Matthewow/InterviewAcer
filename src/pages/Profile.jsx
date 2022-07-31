@@ -1,11 +1,19 @@
 import { Box, Stack, Button,InputLabel, MenuItem, 
     Grid, TextField,
     Skeleton, Typography, Autocomplete } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { topUniversities } from "../utils/labelData";
+import { useNavigate } from "react-router-dom";
 
-const Profile = () => {
+const Profile = ({token, setToken}) => {
+
+    let navigate = useNavigate();
+    useEffect(() => {
+        if (token === "")
+        navigate('/signin')
+    }, [token]);
+
     const [buttonText, setButtonText] = useState("Edit");
     const [contentEditing, setContentEditing] = useState(false);
     var personalInfo = {
@@ -17,7 +25,7 @@ const Profile = () => {
             graduationMonth: "08",
             company: "Amazon", 
             YoE: "2 years"
-        };
+    };
 
     const [userIdentity, setUserIdentity] = useState(personalInfo.identity);
 

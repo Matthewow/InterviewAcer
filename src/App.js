@@ -3,8 +3,7 @@ import './App.css';
 import SignInSide from './pages/SignInSide';
 import Register from './pages/Register';
 import DashBoard from './pages/DashBoard';
-import Test from './Test';
-import { useContext, useState } from 'react';
+import {useState,useEffect } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -21,28 +20,38 @@ import SingleInterviewPage from './pages/SingleInterviewPage';
 import MyCollectionPage from './pages/MyCollectionPage';
 
 
-// https://www.youtube.com/watch?v=aTPkos3LKi8&ab_channel=LamaDev
-
 function App() {
-
+  
+  var t = sessionStorage.getItem("t");
   const [token, setToken] = useState('');
+  const [personalInfo, setPersonalInfo] = useState();
+
+  useEffect(() => {
+    if (t !== null)
+      setToken(t)
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("t", token);
+    console.log(token, t)
+  }, [token]);
+
 
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<DashBoard />} />
-        <Route exact path="/signin" element={<SignInSide />} />
+        <Route exact path="/" element={<DashBoard token = {token} setToken = {setToken}/>} />
+        <Route exact path="/signin" element={<SignInSide token = {token} setToken = {setToken} setPersonalInfo = {setPersonalInfo}/>} />
         <Route exact path="/register" element={<Register />} />
-        <Route exact path="/question_upload" element={<QuestionUploadPage />} />
-        <Route exact path="/interview_upload" element={<InterviewUploadPage />} />
-        <Route exact path="/test" element={<Test token = {token}/>} />
+        <Route exact path="/question_upload" element={<QuestionUploadPage token = {token} setToken = {setToken}/>} />
+        <Route exact path="/interview_upload" element={<InterviewUploadPage token = {token} setToken = {setToken}/>} />
         <Route exact path="/info" element={<Info />} />
-        <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/mypost" element={<MyPostPage />} />
-        <Route exact path="/mycollection" element={<MyCollectionPage/>} />
-        <Route exact path="/programming_question" element={<ProgrammingQuestionPage />} />
-        <Route exact path="/single_interview" element={<SingleInterviewPage />} />
+        <Route exact path="/profile" element={<Profile token = {token} setToken = {setToken} personalInfo = {personalInfo}/>} />
+        <Route exact path="/mypost" element={<MyPostPage token = {token} setToken = {setToken}/>} />
+        <Route exact path="/mycollection" element={<MyCollectionPage token = {token} setToken = {setToken}/>} />
+        <Route exact path="/programming_question" element={<ProgrammingQuestionPage token = {token} setToken = {setToken}/>} />
+        <Route exact path="/single_interview" element={<SingleInterviewPage token = {token} setToken = {setToken}/>} />
       </Routes>
     </BrowserRouter>
   );

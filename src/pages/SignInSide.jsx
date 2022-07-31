@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
 function Copyright(props) {
   return (
@@ -26,28 +26,37 @@ function Copyright(props) {
 const theme = createTheme();
 
 
-export default function SignInSide() {
+export default function SignInSide({token, setToken, setPersonalInfo}) {
   const [errorAlert, setErrorAlert] = useState("none")
   const [alertContext, setAlertContext] = useState("Failed to log in, please try again...")
 
   let navigate = useNavigate();
+  useEffect(() => {
+    if (token !== "")
+      navigate('/')
+  }, [token]);
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
 
     const login_info = {
       "email": data.get('email'),
       "password": data.get('password')
     }
 
-    axios.post(`http://120.77.98.16:8080/login_register/login`, login_info)
+    axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/login_register/login`, login_info)
       .then(res => {
-        console.log(res)
         if (res.status === 200) {
           console.log(res.data);
-          if (res.data.code === '00') 
+          if (res.data.code === '00'){
+              setToken(res.data.token);
+              // setPersonalInfo(res.data.data);
               navigate("/#home", { replace: true });
+          }
           else{
               setErrorAlert("block")
               setAlertContext(res.data.description)

@@ -2,23 +2,30 @@ import { List, ListItem, ListItemButton, Stack, ListItemIcon, ListItemText } fro
 import { Box } from '@mui/system'
 import React, { useState, useEffect } from 'react'
 import AdjustIcon from '@mui/icons-material/Adjust';
-import { LottieCom } from '../components/SmallerComps';
-import { QuestionCard } from '../components/QuestionCard';
-import QuestionDisplayCard from '../components/QuestionDisplayCard';
 import { postHeader } from '../utils/fetchData';
 import axios from 'axios';
 import { KnowledgeListItem } from '../components/KnowledgeListItem';
 import InterviewMainPageTable from '../components/InterviewMainPageTable';
+import { useNavigate } from 'react-router-dom';
+import QuestionDisplayCard from '../components/QuestionDisplayCard';
 
 
-const MyPostPage = () => {
+const MyPostPage = ({token, setToken}) => {
+
+    let navigate = useNavigate();
+    useEffect(() => {
+        if (token === "")
+        navigate('/signin')
+    }, [token]);
+
     const [select, setSelect] = useState('knowledge');
     const [myPostData, setMyPostData] = useState();
     const [displayCard, setDisplayCard] = useState();
 
+
     useEffect(() => {
-        axios.get(`http://120.77.98.16:8080/my_posts`, {
-        headers: postHeader
+        axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/my_posts`, {
+        headers: postHeader(token)
         })
         .then(res => {
         if (res.status === 200) {
@@ -61,16 +68,6 @@ const MyPostPage = () => {
                     <ListItemText primary="Interview" />
                 </ListItemButton>
                 </ListItem>
-{/* 
-                <ListItem disablePadding>
-                <ListItemButton component="a" >
-                    <ListItemIcon>
-                        <AdjustIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Discussion(tbd)" />
-                </ListItemButton>
-                </ListItem> */}
-                
             </List>
             
             </Box>
@@ -94,9 +91,7 @@ const MyPostPage = () => {
             </Box>
 
             <Box flex={4} p={2} sx={{}}>
-
-            {/* <QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard}/> */}
-               
+                <QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard} token = {token}/>
             </Box>
         
         </>

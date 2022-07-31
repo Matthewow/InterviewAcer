@@ -45,70 +45,8 @@ export default function QuestionUploadPage() {
         setItemId(itemId + 1)
     };
 
-    const test = () => {
-        console.log(interviewData);
-    }
-
-    const postInterview = () => {
-
-        axios.post(`http://120.77.98.16:8080/interview_service/create`, interviewData, {
-        headers: postHeader
-        })
-        .then(res => {
-            console.log(res)
-            if (res.status === 200) {
-            console.log(res.data);
-            if (res.data.code === '00') {
-                setInterviewData(defaultInterViewData)
-                navigate('/info', { state: {
-                    info: "success",
-                    content: "Successfully Uploaded",
-                    backto: "/interview_upload"
-                } });
-            }
-            else{
-                navigate('/info', { state: {
-                    info: "error",
-                    content: res.data.description,
-                    backto: "/interview_upload"
-                } });
-            }
-            }
-        })
-    };
 
 
-    const InterviewDescription = () => {
-        return (
-            <>
-            <Typography variant="h5" color = "primary" sx={{mt: 5}}>
-                About this interview
-            </Typography>
-    
-            <Stack direction='column' maxWidth='800px'>
-                <Typography sx={{mt: 2}}> Title</Typography>
-                <TextField
-                    id="standard-multiline-flexible"
-                    label="You can add a brief of this interview here, and get the others a quick understanding"
-                    maxRows={4}
-                    value={interviewData.title}
-                    onChange={(e) =>{
-                        setInterviewData({ ...interviewData, title: e.target.value })
-                    }}
-                    variant="standard"
-                />
-                <Typography sx={{mt: 3}}> Description</Typography>
-                <TextField
-                    id="standard-multiline-static"
-                    label="More detailed description here "
-                    multiline
-                    rows={4}
-                    variant="standard"
-                />        
-            </Stack> 
-            </>
-        )
-    }
 
     const InterviewMetaData = () => {
         return (
@@ -200,62 +138,6 @@ export default function QuestionUploadPage() {
         )
     }
     
-    const QuestionAddingPart = () => {
-    
-        return (
-            <>
-    
-            <Typography variant="h5" color = "primary" sx={{mt: 3}} >
-                Add Questions
-            </Typography> 
-    
-            <Box
-                sx={{
-                    marginTop: 3,
-                    display: 'flex',
-                    flexDirection: 'row'
-                }}
-            >
-                <Autocomplete 
-                sx={{
-                    mt: 1, 
-                    ml: 1,
-                    width: 200
-                }}
-                freeSolo
-                id="combo-box-demo"
-                options={questionTypeLabels}
-                onChange={(e, thisTag) =>
-                    setQuestionData({ ...questionData, quetionTag: thisTag.label })
-                  }
-                renderInput={(params) => <TextField {...params} label="Question Type" />}
-                />
-       
-            </Box>
-    
-            <Box sx={{my:3}}>
-    
-            <Typography variant="h6" color = "gray">
-                Question Content
-            </Typography>
-    
-            <MDEditor height={300}
-                value={editorValue}
-                onChange = {setEditorValue}
-            />
-    
-            </Box>
-    
-            <Button
-                variant="outlined"
-                onClick={handleAddQuestion}
-            >
-                add
-            </Button>
-            </>
-        )
-    
-    }
     
     const InterviewRenderingPart = () => {
         return (
@@ -279,9 +161,7 @@ export default function QuestionUploadPage() {
             ))}
             </>
             }
-
-            <Button sx={{mt: 5}} variant="contained" onClick={test}>submit interview</Button>
-            
+            <Button sx={{mt: 5}} variant="contained">submit interview</Button>
             </>
         )
     

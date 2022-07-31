@@ -39,11 +39,11 @@ export default function SignUp() {
       "password": data.get('password')
     }
 
-    axios.post(`http://120.77.98.16:8080/login_register/register`, register_info)
+    axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/login_register/register`, register_info)
       .then(res => {
-        console.log(res)
+        //console.log(res)
         if (res.status === 200) {
-          console.log(res.data);
+          //console.log(res.data);
           if (res.data.code === '00') 
               navigate("/#home", { replace: true });
           else{

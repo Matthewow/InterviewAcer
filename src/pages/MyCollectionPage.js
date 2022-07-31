@@ -2,38 +2,40 @@ import { List, ListItem, ListItemButton, Stack, ListItemIcon, ListItemText } fro
 import { Box } from '@mui/system'
 import React, { useState, useEffect } from 'react'
 import AdjustIcon from '@mui/icons-material/Adjust';
-import { LottieCom } from '../components/SmallerComps';
-import { QuestionCard } from '../components/QuestionCard';
 import QuestionDisplayCard from '../components/QuestionDisplayCard';
 import { postHeader } from '../utils/fetchData';
 import axios from 'axios';
 import { KnowledgeListItem } from '../components/KnowledgeListItem';
 import InterviewMainPageTable from '../components/InterviewMainPageTable';
+import { useNavigate } from 'react-router-dom';
 
 
-const MyCollectionPage = () => {
+const MyCollectionPage = ({token, setToken}) => {
+
+
+    let navigate = useNavigate();
+    useEffect(() => {
+        if (token === "")
+        navigate('/signin')
+    }, [token]);
     const [select, setSelect] = useState('knowledge');
     const [MyCollectionData, setMyCollectionData] = useState();
     const [displayCard, setDisplayCard] = useState();
 
     useEffect(() => {
-        axios.get(`http://120.77.98.16:8080/users_like`, {
-        headers: postHeader
+        axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/users_like`, {
+        headers: postHeader(token)
         })
         .then(res => {
         if (res.status === 200) {
             if (res.data.code === '00') 
                 setMyCollectionData(res.data.data)
-                console.log(res.data);
             }
         })
         
     }, []);
 
     useEffect(() => {
-        console.log('====================================');
-        console.log(MyCollectionData);
-        console.log('====================================');
         if (MyCollectionData!== undefined && MyCollectionData.questions.entities.length > 0)
             setDisplayCard(MyCollectionData.questions.entities[0])
     }, [MyCollectionData]);
@@ -65,16 +67,7 @@ const MyCollectionPage = () => {
                     <ListItemText primary="Interview" />
                 </ListItemButton>
                 </ListItem>
-{/* 
-                <ListItem disablePadding>
-                <ListItemButton component="a" >
-                    <ListItemIcon>
-                        <AdjustIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Discussion(tbd)" />
-                </ListItemButton>
-                </ListItem> */}
-                
+
             </List>
             
             </Box>
@@ -98,16 +91,14 @@ const MyCollectionPage = () => {
             </Box>
 
             <Box flex={4} p={2} sx={{}}>
-                <QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard}/>
+                <QuestionDisplayCard  questioncard={displayCard} setDisplayCard = {setDisplayCard} token = {token}/>
             </Box>
         
         </>
         :
         <>
             <Box flex={7} p={2} sx={{}}>
-            
                 <InterviewMainPageTable data = {MyCollectionData.interviews.entities}/>
-
             </Box>
         
         </>

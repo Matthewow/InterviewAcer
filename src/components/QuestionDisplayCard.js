@@ -32,7 +32,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
+export default function QuestionDisplayCard({questioncard, setDisplayCard, token}) {
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -53,15 +53,15 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
   
   const handlePostSubmit = () => {
 
-  var url = isCommentsDisplayed ? `http://120.77.98.16:8080/knowledge_service/comment/`:`http://120.77.98.16:8080/knowledge_service/answer/`
+  var url = isCommentsDisplayed ? `${process.env.REACT_APP_SERVER_ADDRESS}/knowledge_service/comment/`:`${process.env.REACT_APP_SERVER_ADDRESS}/knowledge_service/answer/`
 
     const requestBody = {
       "knowledgeId": questioncard.knowledgeId,
       "content": commentContent
   }
-    console.log('Comment posted', commentContent);
+
     axios.post(url, requestBody, {
-      headers: postHeader
+      headers: postHeader(token)
     })
     .then(res => {
       if (res.status === 200) {
@@ -74,18 +74,17 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
 
   const handleLiked = () => {
 
-    var url = `http://120.77.98.16:8080/users_like/`
+    var url = `${process.env.REACT_APP_SERVER_ADDRESS}/users_like/`
     const requestBody = {
       "id": questioncard.knowledgeId,
       "type": 0
     }
 
     axios.post(url, requestBody, {
-      headers: postHeader
+      headers: postHeader(token)
     })
     .then(res => {
       if (res.status === 200) {
-        console.log(res.data)
         if (res.data.code === '00') 
             setIsLiked(true)
         if (res.data.code === '11') 
@@ -96,9 +95,8 @@ export default function QuestionDisplayCard({questioncard, setDisplayCard}) {
   }
 
   const refreshThisCard = () => {
-    console.log('Comment posted', commentContent);
-    axios.get(`http://120.77.98.16:8080/knowledge_service?uuid=${questioncard.knowledgeId}`, {
-      headers: postHeader
+    axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/knowledge_service?uuid=${questioncard.knowledgeId}`, {
+      headers: postHeader(token)
     })
     .then(res => {
       if (res.status === 200) {

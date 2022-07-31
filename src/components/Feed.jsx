@@ -1,12 +1,14 @@
 import { Box, Stack, Skeleton } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { postHeader } from "../utils/fetchData";
 import Post from "./Post";
 
-const Feed = () => {
+const Feed = ({token, setToken}) => {
 
   const [Jobs, setJobs] = useState();
+  let navigate = useNavigate();
 
   const requestBody = {
     "pageFirst": 1,
@@ -14,14 +16,17 @@ const Feed = () => {
   }
 
   React.useEffect(() => {
-    axios.post(`http://120.77.98.16:8080/job_service/load/`, requestBody, {
-      headers: postHeader
+    axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/job_service/load/`, requestBody, {
+      headers: postHeader(token)
     })
     .then(res => {
       if (res.status === 200) {
-        if (res.data.code === '00') 
-          setJobs(res.data.data.entities)
-          console.log(res.data.data.entities)
+        if (res.data.code === '00') {
+          setJobs(res.data.data.entities);
+          setToken(res.data.token);
+        }
+        else if ((res.data.code === '97' || (res.data.code === '98')))
+          navigate('/signin')
       }
     })
   }, []);

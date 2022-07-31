@@ -18,17 +18,17 @@ import { postHeader } from "../utils/fetchData";
 
 const random = () => Math.floor(Math.random() * 255);
   
-  const Rightbar = () => {
+const Rightbar = ({token, setToken}) => {
     const [people, setPeople] = React.useState([]);
     
     useEffect(() => {
-      axios.get(`http://120.77.98.16:8080/get_alumni/`, {
-          headers: postHeader
+      axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/get_alumni/`, {
+          headers: postHeader(token)
           })
       .then(res => {
           if (res.status === 200 && res.data.code === "00") {
-              console.log("-----",res.data.data)
               setPeople(res.data.data)
+              setToken(res.data.token);
           }
       })
       
@@ -67,13 +67,12 @@ const random = () => Math.floor(Math.random() * 255);
                   secondary={
                     <React.Fragment>
                       <Typography
-                        sx={{ display: 'inline' }}
+                        // sx={{ display: 'inline' }}
                         variant="body2"
                         color="text.primary"
                       >
                         {item.school}
                       </Typography>
-                      
                     </React.Fragment>
                   }
                 />
